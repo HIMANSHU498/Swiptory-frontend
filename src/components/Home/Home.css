@@ -34,7 +34,6 @@
   align-items: center;
   width: 100vw;
   margin-top: 0px;
-  border: 2px solid red;
 }
 .category-title {
   text-align: center;
@@ -55,7 +54,7 @@
 .story-card {
   width: 20vw;
   height: 50vh;
-  background: rgb(255, 196, 196);
+
   border-radius: 15px;
 }
 .story-card img {
@@ -107,4 +106,17 @@
   font-weight: 700;
   line-height: normal;
   cursor: pointer;
+}
+.edit-btn {
+  position: relative;
+  top: 26vh;
+  left: 7vw;
+  width: 79px;
+  height: 34px;
+  font-weight: 600;
+  border: none;
+  background-color: #fff;
+  color: black;
+  border-radius: 20px;
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
 }

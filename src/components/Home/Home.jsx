@@ -47,8 +47,9 @@ const Home = () => {
                 <h4 className="story-description">
                   Inspirational designs, illustrations, and graphic elements
                   from the world’s best designers.
-                </h4>
+                </h4>{" "}
               </div>
+              {/* <button className="edit-btn">&#x270E;Edit</button> */}
             </div>
             <div className="story-card">
               <img src={foodImg} alt="foodpic" />

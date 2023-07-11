@@ -1,39 +1,41 @@
 import React from "react";
 import "./Login.css";
-
+import cancel from "./../../assets/cancel.svg";
+import eyeOutline from "./../../assets/mdi_eye-outline.svg";
+import eyeOffOutline from "./../../assets/eye-off-outline.svg";
 const Login = () => {
   return (
     <>
-      <div className="loginpage-container">
+      <div className="login-container">
         <div className="login-box">
-          <div className="login-content">
-            <div className="login-heading1">Already have an account?</div>
-            <div className="login-heading2">
-              Your personal job finder is here
-            </div>
-            <form>
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                className="user-input"
-              />
+          <img src={cancel} alt="cancel icon" />
+
+          <div className="login-contentbox">
+            <h2 className="login-h2">Login to SwipTory</h2>
+            <label>
+              Username
               <input
                 type="text"
-                placeholder="Password"
+                placeholder="Enter username"
+                name="name"
+                // onChange={handleChange}
+                // value={name}
+              />
+            </label>
+            <label style={{ marginLeft: "6vw" }}>
+              Password
+              <input
+                type="text"
+                placeholder="Enter password"
                 name="password"
-                className="user-input"
-              />{" "}
-              <br />
-              <button className="login-btn">Sign in</button>
-            </form>
-            <span>Don’t have an account?</span> &nbsp;
-            <span className="signup-btn">Sign Up</span>
+                // onChange={handleChange}
+                // value={name}
+              />
+              <img src={eyeOutline} alt="" className="eye-icon" />
+            </label>
+            <p>Please enter valid username</p>
+            <button className="login-button">Login</button>
           </div>
-        </div>
-        <div className="login-banner">
-          <img src={loginBanner} alt="" />
-          <div className="banner-title">Your Personal Job Finder</div>
         </div>
       </div>
     </>
