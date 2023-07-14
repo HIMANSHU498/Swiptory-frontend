@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./StoryCard.css";
 import previousStoryBtn from "./../../assets/ooui_next-ltr.svg";
 import nextStoryBtn from "./../../assets/ooui_next-ltr (1).svg";
@@ -7,6 +7,7 @@ import bookmarkStory from "./../../assets/Group 21.svg";
 import likedIcon from "./../../assets/likes.svg";
 import shareIcon from "./../../assets/shareicon.svg";
 import cancelIcon from "./../../assets/cross.svg";
+
 const StoryCard = () => {
   return (
     <>
@@ -15,6 +16,7 @@ const StoryCard = () => {
           <img src={previousStoryBtn} alt="backbutton" />
           <div className="storycard">
             <div className="upper-darkshade">
+              <div className="progressbar-container"></div>
               <div>
                 <img src={cancelIcon} alt="cancelbutton" />
                 <img src={shareIcon} alt="sharebutton" />
