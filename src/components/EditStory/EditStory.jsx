@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import "./AddStory.css";
+import React, { useState, useEffect } from "react";
+import "./EditStory.css";
 import cancel from "./../../assets/cancel.svg";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import axios from "axios";
 
-const AddStory = () => {
+const EditStory = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [error, setErrors] = useState("");
   const initialSlide = {
     slideHeading: "",
@@ -14,8 +15,36 @@ const AddStory = () => {
     category: "",
   };
 
-  const [currentSlide, SetCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(0);
   const [story, setStory] = useState([initialSlide]);
+  useEffect(() => {
+    const fetchUserStories = async () => {
+      try {
+        const jwtToken = localStorage.getItem("token");
+        const response = await axios.get(
+          "https://swiptory-backend.onrender.com/api/storiesbyuser",
+          {
+            headers: {
+              Authorization: jwtToken,
+            },
+          }
+        );
+
+        const userStories = response.data.userStories;
+        const foundStory = userStories.find((story) => story._id === id);
+
+        if (foundStory) {
+          setStory(foundStory.slides);
+        } else {
+          setErrors("Story not found");
+        }
+      } catch (error) {
+        console.error("Error fetching story:", error.response.data);
+      }
+    };
+
+    fetchUserStories();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,16 +56,15 @@ const AddStory = () => {
       return updatedSlides;
     });
   };
-
   const handleNextSlide = () => {
     if (currentSlide < story.length - 1) {
-      SetCurrentSlide((prevIndex) => prevIndex + 1);
+      setCurrentSlide((prevIndex) => prevIndex + 1);
     }
   };
 
   const handlePreviousSlide = () => {
     if (currentSlide > 0) {
-      SetCurrentSlide((prevIndex) => prevIndex - 1);
+      setCurrentSlide((prevIndex) => prevIndex - 1);
     }
   };
 
@@ -46,8 +74,8 @@ const AddStory = () => {
 
       const jwtToken = localStorage.getItem("token");
 
-      const response = await axios.post(
-        "https://swiptory-backend.onrender.com/api/addstory",
+      const response = await axios.put(
+        `https://swiptory-backend.onrender.com/api/story/edit/${id}`,
         { slides },
         {
           headers: {
@@ -62,25 +90,20 @@ const AddStory = () => {
         navigate("/");
       }
     } catch (error) {
-      console.error("Error adding story:", error.response.data);
+      console.error("Error editing story:", error.response.data);
     }
   };
-  const handleAddSlide = () => {
-    setErrors("");
-    if (story.length < 6) {
-      setStory((prevState) => [...prevState, initialSlide]);
-      SetCurrentSlide(story.length);
-    }
-  };
+
   const cancelButton = () => {
     navigate("/");
   };
+
   return (
     <>
-      <div className="addstory-container">
-        <div className="addstory-box">
+      <div className="editstory-container">
+        <div className="editstory-box">
           <img src={cancel} alt="cancel-icon" onClick={cancelButton} />
-          <div className="heading2">Add up to 6 slides</div>
+          <div className="heading2">Edit Story</div>
           <div className="slide-btn-container">
             {story.map((_, index) => (
               <div
@@ -92,13 +115,8 @@ const AddStory = () => {
                 Slide {index + 1}
               </div>
             ))}
-            {story.length < 6 && (
-              <div className="slide-btn" onClick={handleAddSlide}>
-                Add +
-              </div>
-            )}
           </div>
-          <div className="addstory-contentbox">
+          <div className="editstory-contentbox">
             <div>
               <label>Heading:</label>
               <input
@@ -107,7 +125,7 @@ const AddStory = () => {
                 value={story[currentSlide].slideHeading}
                 onChange={handleChange}
                 placeholder="Your heading"
-                className="addstory-input"
+                className="editstory-input"
               />
             </div>
             <div>
@@ -118,7 +136,7 @@ const AddStory = () => {
                 value={story[currentSlide].slideDescription}
                 onChange={handleChange}
                 placeholder="Story description"
-                className="addstory-input"
+                className="editstory-input"
                 style={{ height: "80px" }}
               />
             </div>
@@ -130,7 +148,7 @@ const AddStory = () => {
                 value={story[currentSlide].slideImageUrl}
                 onChange={handleChange}
                 placeholder="Add image url"
-                className="addstory-input"
+                className="editstory-input"
               />
             </div>
             <div>
@@ -154,7 +172,7 @@ const AddStory = () => {
           <p style={{ color: "red", marginLeft: "5rem" }}>
             {error && <span> {error}</span>}
           </p>
-          <div className="addstory-buttons-box">
+          <div className="editstory-buttons-box">
             <div>
               <button className="previous-btn" onClick={handlePreviousSlide}>
                 Previous
@@ -164,7 +182,7 @@ const AddStory = () => {
               </button>
             </div>
             <button className="post-btn" onClick={handlePostStory}>
-              Post
+              Save
             </button>
           </div>
         </div>
@@ -173,4 +191,4 @@ const AddStory = () => {
   );
 };
 
-export default AddStory;
+export default EditStory;

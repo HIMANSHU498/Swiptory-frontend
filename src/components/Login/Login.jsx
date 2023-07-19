@@ -5,11 +5,13 @@ import eyeOutline from "./../../assets/eye.png";
 import eyeOffOutline from "./../../assets/hide.png";
 import { useNavigate } from "react-router";
 import axios from "axios";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Login = () => {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ username: "", password: "" });
   const [error, setErrors] = useState();
+
   const [showPassword, setShowPassword] = useState(false);
   const handleChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -20,7 +22,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/login",
+        "https://swiptory-backend.onrender.com/api/login",
         loginData,
         {
           headers: {
@@ -36,7 +38,8 @@ const Login = () => {
       } else {
         window.localStorage.setItem("username", responseData.name);
         window.localStorage.setItem("token", responseData.jwtToken);
-        alert(responseData.success);
+        // alert(responseData.success);
+
         navigate("/");
       }
     } catch (error) {

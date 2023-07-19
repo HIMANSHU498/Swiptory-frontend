@@ -1,4 +1,4 @@
-.addstory-container {
+.editstory-container {
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -11,7 +11,7 @@
 .slide-btn.active {
   border: 2px solid #73abff;
 }
-.addstory-box {
+.editstory-box {
   width: 50vw;
   height: 80vh;
   background-color: white;
@@ -46,19 +46,19 @@
   box-sizing: border-box;
   padding-top: 20px;
 }
-.addstory-contentbox {
+.editstory-contentbox {
   display: flex;
   flex-direction: column;
   width: 34vw;
   margin-top: 10vh;
   margin-left: 6vw;
 }
-.addstory-contentbox div {
+.editstory-contentbox div {
   display: flex;
   justify-content: space-between;
   margin: 10px;
 }
-.addstory-contentbox div label {
+.editstory-contentbox div label {
   color: #000;
   text-align: center;
   font-family: DM Sans;
@@ -67,7 +67,7 @@
   font-weight: 700;
   line-height: normal;
 }
-.addstory-contentbox div select {
+.editstory-contentbox div select {
   width: 19vw;
   height: 35px;
   padding-left: 10px;
@@ -82,7 +82,7 @@
   font-weight: 700;
   line-height: normal;
 }
-.addstory-input {
+.editstory-input {
   width: 18vw;
   height: 30px;
   padding-left: 10px;
@@ -96,7 +96,7 @@
   font-weight: 700;
   line-height: normal;
 }
-.addstory-buttons-box {
+.editstory-buttons-box {
   margin-top: 15px;
   margin-left: 6vw;
   width: 40vw;
@@ -171,7 +171,7 @@
   font-weight: 700;
   line-height: normal;
 }
-.addstory-box img {
+.editstory-box img {
   display: inline;
   position: relative;
   float: right;

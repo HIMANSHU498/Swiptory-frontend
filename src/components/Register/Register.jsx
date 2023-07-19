@@ -23,7 +23,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/register",
+        "https://swiptory-backend.onrender.com/api/register",
         userData,
         {
           headers: {

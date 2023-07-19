@@ -1,10 +1,27 @@
 import React from "react";
 import "./Home.css";
 import foodImg from "./../../assets/Food.png";
+import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Home = () => {
+  const notify = () => toast("Wow so easy!");
   return (
     <>
       <div className="home-container">
+        {/* <Link to={`/editstory/64b7adcd72945757281d4d74`}>Edit Story</Link> */}
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <div className="category-container">
           <div className="category-box">
             <h1 className="category-name">All</h1>
@@ -76,7 +93,9 @@ const Home = () => {
               </h4>
             </div>
           </div>
-          <button className="see-more">See more</button>
+          <button className="see-more" onClick={() => toast("Wow so hhh")}>
+            See more
+          </button>
         </div>
       </div>
     </>

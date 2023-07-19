@@ -92,8 +92,11 @@
 }
 .menu-icon {
   margin-top: 5px;
+  cursor: pointer;
 }
 .profile-card {
+  top: 11vh;
+  right: 10px;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -104,6 +107,10 @@
   height: 20vh;
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.profile-card img {
+  margin-left: 140px;
+  cursor: pointer;
 }
 .username {
   color: #000;
