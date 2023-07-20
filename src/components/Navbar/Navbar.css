@@ -10,6 +10,7 @@
   box-sizing: border-box;
 }
 .page-title {
+  cursor: pointer;
   color: #000;
   margin-left: 10px;
   font-family: DM Sans;

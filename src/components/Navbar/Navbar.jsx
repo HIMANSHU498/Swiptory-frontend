@@ -6,6 +6,7 @@ import bookmarkIcon from "./../../assets/Vector.svg";
 import cross from "./../../assets/cross.svg";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+
 const Navbar = () => {
   const navigate = useNavigate();
 
@@ -28,7 +29,9 @@ const Navbar = () => {
   return (
     <>
       <div className="navbar-container">
-        <div className="page-title">SwipTory</div>
+        <div className="page-title" onClick={() => navigate("/")}>
+          SwipTory
+        </div>
         <div className="navbar-btns">
           {!isLoggedIn ? (
             <>

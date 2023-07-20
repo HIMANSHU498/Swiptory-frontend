@@ -59,7 +59,7 @@
   margin-bottom: 20px;
   width: 20vw;
   height: 50vh;
-
+  cursor: pointer;
   border-radius: 15px;
 }
 .category-box.selected {

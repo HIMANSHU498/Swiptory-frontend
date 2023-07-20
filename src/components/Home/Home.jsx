@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import category from "./data";
 import "./Home.css";
 import Storybyuser from "./Storybyuser";
+import { useNavigate } from "react-router";
 
 const Home = () => {
   const [categories, setCategories] = useState({});
@@ -12,7 +13,8 @@ const Home = () => {
   const [showMore, setShowMore] = useState({});
   const [storybycategory, setStoryByCategory] = useState({});
   const isLoggedIn = !!localStorage.getItem("token");
-
+  const navigate = useNavigate();
+  console.log(categories);
   useEffect(() => {
     async function fetchCategories() {
       try {
@@ -53,6 +55,7 @@ const Home = () => {
     setSelectedCategory(categoryName);
     fetchStoriesByCategory(categoryName);
   };
+
   return (
     <>
       <div className="home-container">
@@ -101,7 +104,13 @@ const Home = () => {
                         : 4
                     )
                     .map((storiesArray, innerIndex) => (
-                      <div key={innerIndex} className="story-card">
+                      <div
+                        key={innerIndex}
+                        className="story-card"
+                        onClick={() =>
+                          navigate(`/story/${storiesArray[0]._id}`)
+                        }
+                      >
                         <img
                           src={storiesArray[0].slideImageUrl}
                           alt="storypic"
@@ -141,7 +150,11 @@ const Home = () => {
                       : 4
                   )
                   .map((storiesArray, index) => (
-                    <div key={index} className="story-card">
+                    <div
+                      key={index}
+                      className="story-card"
+                      onClick={() => navigate(`/story/${storiesArray[0]._id}`)}
+                    >
                       <img src={storiesArray[0].slideImageUrl} alt="foodpic" />
                       <div className="dark-shadow">
                         <h3 className="story-title">

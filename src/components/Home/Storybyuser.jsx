@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./Home.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router";
 const Storybyuser = () => {
   const [stories, setStories] = useState([]);
   const [visibleStories, setVisibleStories] = useState(4);
-
+  const navigate = useNavigate();
   useEffect(() => {
     async function fetchStoriesByUser() {
       try {
@@ -41,7 +42,11 @@ const Storybyuser = () => {
         <h2 className="category-title">Your Stories</h2>
         <div className="story-box">
           {stories.slice(0, visibleStories).map((story, i) => (
-            <div key={i} className="story-card">
+            <div
+              key={i}
+              className="story-card"
+              onClick={() => navigate(`/story/${story._id}`)}
+            >
               <img src={story.slides[0].slideImageUrl} alt="foodpic" />
               <div className="dark-shadow">
                 <h3 className="story-title">{story.slides[0].slideHeading}</h3>
