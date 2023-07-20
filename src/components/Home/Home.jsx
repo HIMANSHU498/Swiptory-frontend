@@ -1,101 +1,170 @@
-import React from "react";
-import "./Home.css";
-import foodImg from "./../../assets/Food.png";
-import { Link } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+
 import "react-toastify/dist/ReactToastify.css";
+import category from "./data";
+import "./Home.css";
+import Storybyuser from "./Storybyuser";
+
 const Home = () => {
-  const notify = () => toast("Wow so easy!");
+  const [categories, setCategories] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [showMore, setShowMore] = useState({});
+  const [storybycategory, setStoryByCategory] = useState({});
+  const isLoggedIn = !!localStorage.getItem("token");
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await axios.get(
+          "https://swiptory-backend.onrender.com/api/categories"
+        );
+
+        setCategories(response.data.categories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    }
+
+    fetchCategories();
+  }, []);
+  const fetchStoriesByCategory = async (categoryName) => {
+    try {
+      const response = await axios.get(
+        `https://swiptory-backend.onrender.com/api/stories/${categoryName}`
+      );
+      const stories = response.data;
+      setStoryByCategory(stories);
+    } catch (error) {
+      console.error(
+        `Error fetching stories for category '${categoryName}':`,
+        error
+      );
+    }
+  };
+
+  const handleSeeMore = (categoryName) => {
+    setShowMore((prevState) => ({
+      ...prevState,
+      [categoryName]: !prevState[categoryName],
+    }));
+  };
+  const handleCategoryClick = (categoryName) => {
+    setSelectedCategory(categoryName);
+    fetchStoriesByCategory(categoryName);
+  };
   return (
     <>
       <div className="home-container">
-        {/* <Link to={`/editstory/64b7adcd72945757281d4d74`}>Edit Story</Link> */}
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        />
         <div className="category-container">
-          <div className="category-box">
+          <div
+            className="category-box"
+            onClick={() => {
+              setSelectedCategory("All");
+            }}
+            style={
+              selectedCategory === "All" ? { border: "5px solid #00ACD2" } : {}
+            }
+          >
             <h1 className="category-name">All</h1>
           </div>
-          <div className="category-box">
-            <h1 className="category-name">Food</h1>
-          </div>{" "}
-          <div className="category-box">
-            <h1 className="category-name">Food</h1>
-          </div>
-          <div className="category-box">
-            <h1 className="category-name">Food</h1>
-          </div>
-          <div className="category-box">
-            <h1 className="category-name">Food</h1>
-          </div>
-          <div className="category-box">
-            <h1 className="category-name">Food</h1>
-          </div>
-          <div className="category-box">
-            <h1 className="category-name">Food</h1>
-          </div>
-          <div className="category-box">
-            <h1 className="category-name">Food</h1>
-          </div>
-          <div className="category-box">
-            <h1 className="category-name">Food</h1>
-          </div>
-          <div className="category-box">
-            <h1 className="category-name">Food</h1>
-          </div>
+          {category.map((data, index) => (
+            <div
+              key={index}
+              className="category-box"
+              style={{
+                backgroundImage: `url(${data.image})`,
+                border:
+                  selectedCategory === data.category ? "5px solid #00ACD2" : "",
+              }}
+              onClick={() => handleCategoryClick(data.category)}
+            >
+              <h1 className="category-name">{data.category}</h1>
+            </div>
+          ))}
         </div>
         <div className="stories-container">
-          <h2 className="category-title">Top Stories About food</h2>
-          <div className="story-box">
-            <div className="story-card">
-              <img src={foodImg} alt="foodpic" />
-              <div className="dark-shadow">
-                <h3 className="story-title">Heading comes here</h3>
-                <h4 className="story-description">
-                  Inspirational designs, illustrations, and graphic elements
-                  from the world’s best designers.
-                </h4>{" "}
+          {!isLoggedIn || selectedCategory !== "All" ? "" : <Storybyuser />}
+
+          {selectedCategory === "All" ? (
+            Object.keys(categories).map((categoryName, index) => (
+              <>
+                <h2 key={index} className="category-title">
+                  Top stories about {categoryName}
+                </h2>
+                <div className="story-box">
+                  {categories[categoryName]
+                    ?.slice(
+                      0,
+                      showMore[categoryName]
+                        ? categories[categoryName].length
+                        : 4
+                    )
+                    .map((storiesArray, innerIndex) => (
+                      <div key={innerIndex} className="story-card">
+                        <img
+                          src={storiesArray[0].slideImageUrl}
+                          alt="storypic"
+                        />
+                        <div className="dark-shadow">
+                          <h3 className="story-title">
+                            {storiesArray[0].slideHeading}
+                          </h3>
+                          <h4 className="story-description">
+                            {storiesArray[0].slideDescription}
+                          </h4>
+                        </div>
+                      </div>
+                    ))}
+                </div>
+                {categories[categoryName].length > 4 && (
+                  <button
+                    className="see-more"
+                    onClick={() => handleSeeMore(categoryName)}
+                  >
+                    {showMore[categoryName] ? "See less" : "See more"}
+                  </button>
+                )}
+              </>
+            ))
+          ) : (
+            <>
+              <h2 className="category-title">
+                Top stories about {selectedCategory}
+              </h2>
+              <div className="story-box">
+                {categories[selectedCategory]
+                  ?.slice(
+                    0,
+                    showMore[selectedCategory]
+                      ? categories[selectedCategory].length
+                      : 4
+                  )
+                  .map((storiesArray, index) => (
+                    <div key={index} className="story-card">
+                      <img src={storiesArray[0].slideImageUrl} alt="foodpic" />
+                      <div className="dark-shadow">
+                        <h3 className="story-title">
+                          {storiesArray[0].slideHeading}
+                        </h3>
+                        <h4 className="story-description">
+                          {storiesArray[0].slideDescription}
+                        </h4>
+                      </div>
+                    </div>
+                  ))}
               </div>
-              {/* <button className="edit-btn">&#x270E;Edit</button> */}
-            </div>
-            <div className="story-card">
-              <img src={foodImg} alt="foodpic" />
-              <h3 className="story-title">Heading comes here</h3>
-              <h4 className="story-description">
-                Inspirational designs, illustrations, and graphic elements from
-                the world’s best designers.
-              </h4>
-            </div>
-            <div className="story-card">
-              <img src={foodImg} alt="foodpic" />
-              <h3 className="story-title">Heading comes here</h3>
-              <h4 className="story-description">
-                Inspirational designs, illustrations, and graphic elements from
-                the world’s best designers.
-              </h4>
-            </div>
-            <div className="story-card">
-              <img src={foodImg} alt="foodpic" />
-              <h3 className="story-title">Heading comes here</h3>
-              <h4 className="story-description">
-                Inspirational designs, illustrations, and graphic elements from
-                the world’s best designers.
-              </h4>
-            </div>
-          </div>
-          <button className="see-more" onClick={() => toast("Wow so hhh")}>
-            See more
-          </button>
+              {Array.isArray(categories[selectedCategory]) &&
+                categories[selectedCategory].length > 4 && (
+                  <button
+                    className="see-more"
+                    onClick={() => handleSeeMore(selectedCategory)}
+                  >
+                    {showMore[selectedCategory] ? "See less" : "See more"}
+                  </button>
+                )}
+            </>
+          )}
         </div>
       </div>
     </>

@@ -1,5 +1,6 @@
 import "./App.css";
 import AddStory from "./components/AddStory/AddStory";
+import Bookmark from "./components/Bookmarkpage/Bookmark";
 import EditStory from "./components/EditStory/EditStory";
 import Homepage from "./pages/Homepage";
 import Loginpage from "./pages/Loginpage";
@@ -15,6 +16,7 @@ function App() {
       <Route path="/story" element={<StoryPage />} />
       <Route path="/addstory" element={<AddStory />} />
       <Route path="/editstory/:id" element={<EditStory />} />
+      <Route path="/bookmarked" element={<Bookmark />} />
     </Routes>
   );
 }

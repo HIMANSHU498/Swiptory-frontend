@@ -5,7 +5,7 @@ import menuIcon from "./../../assets/menu-icon.svg";
 import bookmarkIcon from "./../../assets/Vector.svg";
 import cross from "./../../assets/cross.svg";
 import { useNavigate } from "react-router";
-
+import { Link } from "react-router-dom";
 const Navbar = () => {
   const navigate = useNavigate();
 
@@ -15,6 +15,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    window.location.reload();
     navigate("/");
   };
 
@@ -43,9 +44,11 @@ const Navbar = () => {
             </>
           ) : (
             <>
-              <button className="bookmarks-btn">
-                <img src={bookmarkIcon} alt="" /> &nbsp; Bookmarks
-              </button>
+              <Link to="/bookmarked">
+                <button className="bookmarks-btn">
+                  <img src={bookmarkIcon} alt="" /> &nbsp; Bookmarks
+                </button>
+              </Link>
               <button
                 className="bookmarks-btn"
                 onClick={() => navigate("/addstory")}
