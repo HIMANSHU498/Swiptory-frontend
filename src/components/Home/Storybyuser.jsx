@@ -42,12 +42,12 @@ const Storybyuser = () => {
         <h2 className="category-title">Your Stories</h2>
         <div className="story-box">
           {stories.slice(0, visibleStories).map((story, i) => (
-            <div
-              key={i}
-              className="story-card"
-              onClick={() => navigate(`/story/${story._id}`)}
-            >
-              <img src={story.slides[0].slideImageUrl} alt="foodpic" />
+            <div key={i} className="story-card">
+              <img
+                src={story.slides[0].slideImageUrl}
+                alt="foodpic"
+                onClick={() => navigate(`/story/${story._id}`)}
+              />
               <div className="dark-shadow">
                 <h3 className="story-title">{story.slides[0].slideHeading}</h3>
                 <h4 className="story-description">
