@@ -21,6 +21,7 @@ const EditStory = () => {
     const fetchUserStories = async () => {
       try {
         const jwtToken = localStorage.getItem("token");
+
         const response = await axios.get(
           "https://swiptory-backend.onrender.com/api/storiesbyuser",
           {

@@ -104,3 +104,12 @@
 .story-description {
   height: 10vh;
 }
+
+.enabled-btn {
+  cursor: pointer;
+}
+
+.disabled-btn {
+  cursor: default;
+  opacity: 0.6;
+}
