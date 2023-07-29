@@ -143,3 +143,55 @@
 .logout-btn:active {
   background-color: #ee6565;
 }
+@media screen and (min-width: 1400px) {
+  .navbar-container {
+    padding: 15px 10px;
+  }
+  .page-title {
+    font-size: 36px;
+  }
+  .navbar-btns {
+    display: flex;
+    gap: 1.5rem;
+    height: 5vh;
+    margin-top: 3px;
+    margin-right: 20px;
+    /* border: 2px solid red; */
+  }
+  .register-btn {
+    width: 120px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .signin-btn {
+    width: 120px;
+    height: 35px;
+    font-size: 1rem;
+  }
+
+  .bookmarks-btn {
+    font-size: 1rem;
+  }
+  .profile-icon {
+    width: 45px;
+    height: 45px;
+    filter: brightness(120%);
+    border-radius: 50%;
+  }
+  .menu-icon {
+    margin-top: 5px;
+    cursor: pointer;
+  }
+
+  .profile-card img {
+    margin-left: 140px;
+    cursor: pointer;
+  }
+  .username {
+    font-size: 20px;
+  }
+  .logout-btn {
+    font-size: 1.2rem;
+  }
+}

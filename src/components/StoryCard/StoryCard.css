@@ -113,3 +113,26 @@
   cursor: default;
   opacity: 0.6;
 }
+@media screen and (min-width: 1400px) {
+  .storycard-box {
+    gap: 8rem;
+  }
+
+  .bookmarks-likes-container div {
+    display: flex;
+    gap: 0.6rem;
+  }
+  .bookmarks-likes-container div span {
+    font-size: 16px;
+  }
+
+  .link-sharebar {
+    position: absolute;
+    width: 20vw;
+    height: 40px;
+
+    font-size: 18px;
+
+    margin: 15vw 20px;
+  }
+}

@@ -178,3 +178,110 @@
   margin: 5px 5px;
   cursor: pointer;
 }
+@media screen and (min-width: 1400px) {
+  .addstory-contentbox {
+    display: flex;
+    flex-direction: column;
+    width: 34vw;
+    margin-top: 10vh;
+    margin-left: 6vw;
+  }
+
+  .addstory-contentbox div label {
+    font-size: 24px;
+  }
+  .addstory-contentbox div select {
+    width: 20vw;
+    height: 36px;
+
+    font-size: 18px;
+  }
+  .addstory-input {
+    width: 19vw;
+    height: 34px;
+
+    font-size: 18px;
+  }
+  .addstory-buttons-box {
+    margin-top: 25px;
+    margin-left: 6vw;
+    width: 40vw;
+    display: flex;
+    justify-content: space-between;
+  }
+  .next-btn {
+    width: 100px;
+    height: 35px;
+    border-radius: 20px;
+    background: #73abff;
+    color: #fff;
+    text-align: center;
+    font-family: DM Sans;
+    font-size: 1.2rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border: none;
+    cursor: pointer;
+  }
+  .next-btn:active {
+    background-color: #4b91fb;
+  }
+  .previous-btn {
+    width: 100px;
+    height: 35px;
+    border-radius: 20px;
+    background: #7eff73;
+    color: #fff;
+    text-align: center;
+    font-family: DM Sans;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border: none;
+    cursor: pointer;
+    margin-right: 15px;
+  }
+  .previous-btn:active {
+    background-color: #59dc4d;
+  }
+  .post-btn {
+    width: 100px;
+    height: 35px;
+    border-radius: 20px;
+    background: #ff7373;
+    color: #fff;
+    text-align: center;
+    font-family: DM Sans;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    border: none;
+    cursor: pointer;
+  }
+  .post-btn:active {
+    background-color: #e85454;
+  }
+  .heading2 {
+    position: relative;
+    left: 10px;
+    top: 12vh;
+    float: right;
+    color: #474141;
+    text-align: center;
+    font-family: DM Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  .addstory-box img {
+    display: inline;
+    position: relative;
+    float: right;
+    margin: 5px 5px;
+    cursor: pointer;
+  }
+}

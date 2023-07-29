@@ -83,3 +83,35 @@
   transform: translateY(-110%);
   cursor: pointer;
 }
+@media screen and (min-width: 1400px) {
+  .register-contentbox p {
+    font-size: 19px;
+  }
+  .register-button {
+    width: 120px;
+    height: 40px;
+
+    font-size: 1.2rem;
+  }
+
+  .register-contentbox label {
+    font-size: 1.2rem;
+
+    margin: 20px 40px;
+  }
+  .register-contentbox label input {
+    font-size: 16px;
+  }
+  .register-box img {
+    float: right;
+    position: relative;
+    top: 4vh;
+    right: 4vw;
+    cursor: pointer;
+  }
+  .eye-icon {
+    margin-left: 2vw;
+    transform: translateY(-110%);
+    cursor: pointer;
+  }
+}

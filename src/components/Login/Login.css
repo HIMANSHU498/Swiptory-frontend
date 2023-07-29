@@ -91,3 +91,35 @@
   transform: translateY(-110%);
   cursor: pointer;
 }
+@media screen and (min-width: 1400px) {
+  .login-contentbox p {
+    font-size: 19px;
+  }
+  .login-button {
+    width: 120px;
+    height: 40px;
+
+    font-size: 1.2rem;
+  }
+
+  .login-contentbox label {
+    font-size: 1.2rem;
+
+    margin: 20px 40px;
+  }
+  .login-contentbox label input {
+    font-size: 16px;
+  }
+  .login-box img {
+    float: right;
+    position: relative;
+    top: 4vh;
+    right: 4vw;
+    cursor: pointer;
+  }
+  .eye-icon {
+    margin-left: 2vw;
+    transform: translateY(-110%);
+    cursor: pointer;
+  }
+}
