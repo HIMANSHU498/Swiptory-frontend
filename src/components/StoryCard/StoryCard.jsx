@@ -201,7 +201,8 @@ const StoryCard = () => {
           <img
             src={previousStoryBtn}
             alt="backbutton"
-            onClick={handlePreviousSlide}
+            onClick={handlePreviousSlide} 
+            id="previous-btn"
             className={currentSlideIndex === 0 ? "disabled-btn" : "enabled-btn"}
           />
           <div className="storycard">
@@ -262,6 +263,7 @@ const StoryCard = () => {
             src={nextStoryBtn}
             alt="nextbutton"
             onClick={handleNextSlide}
+            id="next-btn"
             className={
               currentSlideIndex === story.length - 1
                 ? "disabled-btn"

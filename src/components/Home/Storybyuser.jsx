@@ -51,7 +51,10 @@ const Storybyuser = () => {
               <div className="dark-shadow">
                 <h3 className="story-title">{story.slides[0].slideHeading}</h3>
                 <h4 className="story-description">
-                  {story.slides[0].slideDescription}
+                  {story.slides[0].slideDescription
+                    .split(" ")
+                    .slice(0, 16)
+                    .join(" ") + "..."}
                 </h4>
               </div>
               <Link to={`/editstory/${story._id}`}>
