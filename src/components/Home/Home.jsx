@@ -6,7 +6,8 @@ import category from "./data";
 import "./Home.css";
 import Storybyuser from "./Storybyuser";
 import { useNavigate } from "react-router";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const Home = () => {
   const [categories, setCategories] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -59,6 +60,18 @@ const Home = () => {
   return (
     <>
       <div className="home-container">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <div className="category-container">
           <div
             className="category-box"

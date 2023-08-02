@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Navbar.css";
-import profileIcon from "./../../assets/hk.jpeg";
+import profileIcon from "./../../assets/hk.png";
 import menuIcon from "./../../assets/menu-icon.svg";
 import bookmarkIcon from "./../../assets/Vector.svg";
 import cross from "./../../assets/cross.svg";

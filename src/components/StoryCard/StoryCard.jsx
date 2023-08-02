@@ -52,7 +52,7 @@ const StoryCard = () => {
           clearInterval(progressInterval.current);
           setTimeout(() => {
             setProgress(0);
-          }, 10000);
+          }, 2000);
         }
         return newProgress;
       });
@@ -61,7 +61,7 @@ const StoryCard = () => {
     if (enableAutoSlideChange && currentSlideIndex < (story?.length || 1) - 1) {
       progressInterval.current = setInterval(
         updateProgress,
-        10000 / (story?.length || 1)
+        2000 / (story?.length || 1)
       );
     } else {
       clearInterval(progressInterval.current);
@@ -82,7 +82,7 @@ const StoryCard = () => {
 
     setTimeout(() => {
       setEnableAutoSlideChange(true);
-    }, 10000);
+    }, 2000);
   };
 
   const handlePreviousSlide = () => {
@@ -94,7 +94,7 @@ const StoryCard = () => {
 
     setTimeout(() => {
       setEnableAutoSlideChange(true);
-    }, 10000);
+    }, 2000);
   };
 
   const handleShare = () => {
@@ -201,7 +201,7 @@ const StoryCard = () => {
           <img
             src={previousStoryBtn}
             alt="backbutton"
-            onClick={handlePreviousSlide} 
+            onClick={handlePreviousSlide}
             id="previous-btn"
             className={currentSlideIndex === 0 ? "disabled-btn" : "enabled-btn"}
           />
