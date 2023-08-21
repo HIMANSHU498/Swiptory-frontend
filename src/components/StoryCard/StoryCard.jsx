@@ -175,7 +175,7 @@ const StoryCard = () => {
   };
 
   if (!story || story.length === 0) {
-    return <div>Loading...</div>;
+    return <img src="https://i.gifer.com/80ZN.gif" className="loading"></img>;
   }
 
   const currentSlide = story[currentSlideIndex];

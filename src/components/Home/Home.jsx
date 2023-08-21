@@ -1,22 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import category from "./data";
 import "./Home.css";
 import Storybyuser from "./Storybyuser";
-import { useNavigate } from "react-router";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 const Home = () => {
   const [categories, setCategories] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [showMore, setShowMore] = useState({});
-  const [storybycategory, setStoryByCategory] = useState({});
+  const [slideByUser, setSlideByUser] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const isLoggedIn = !!localStorage.getItem("token");
   const navigate = useNavigate();
-  console.log(categories);
+
   useEffect(() => {
+    setIsLoading(true);
     async function fetchCategories() {
       try {
         const response = await axios.get(
@@ -24,27 +25,35 @@ const Home = () => {
         );
 
         setCategories(response.data.categories);
+        setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        alert("Error fetching categories:", error);
       }
     }
 
     fetchCategories();
-  }, []);
-  const fetchStoriesByCategory = async (categoryName) => {
-    try {
-      const response = await axios.get(
-        `https://swiptory-backend.onrender.com/api/stories/${categoryName}`
-      );
-      const stories = response.data;
-      setStoryByCategory(stories);
-    } catch (error) {
-      console.error(
-        `Error fetching stories for category '${categoryName}':`,
-        error
-      );
+    async function fetchStoriesByUser() {
+      try {
+        const jwtToken = localStorage.getItem("token");
+        const response = await axios.get(
+          "https://swiptory-backend.onrender.com/api/storiesbyuser",
+          {
+            headers: {
+              Authorization: jwtToken,
+            },
+          }
+        );
+        const slideIdArray = await response.data.userStories
+          .flatMap((story) => story.slides)
+          .map((item) => item._id);
+        setSlideByUser(slideIdArray);
+      } catch (error) {
+        console.error("Error fetching stories:", error);
+      }
     }
-  };
+
+    fetchStoriesByUser();
+  }, []);
 
   const handleSeeMore = (categoryName) => {
     setShowMore((prevState) => ({
@@ -52,9 +61,9 @@ const Home = () => {
       [categoryName]: !prevState[categoryName],
     }));
   };
+
   const handleCategoryClick = (categoryName) => {
     setSelectedCategory(categoryName);
-    fetchStoriesByCategory(categoryName);
   };
 
   return (
@@ -75,9 +84,7 @@ const Home = () => {
         <div className="category-container">
           <div
             className="category-box"
-            onClick={() => {
-              setSelectedCategory("All");
-            }}
+            onClick={() => setSelectedCategory("All")}
             style={
               selectedCategory === "All" ? { border: "5px solid #00ACD2" } : {}
             }
@@ -99,105 +106,121 @@ const Home = () => {
             </div>
           ))}
         </div>
-        <div className="stories-container">
-          {!isLoggedIn || selectedCategory !== "All" ? "" : <Storybyuser />}
+        {isLoading ? (
+          <p
+            style={{ fontSize: "2rem", fontWeight: "700", textAlign: "center" }}
+          >
+            Loading...
+          </p>
+        ) : (
+          <div className="stories-container">
+            {!isLoggedIn || selectedCategory !== "All" ? "" : <Storybyuser />}
 
-          {selectedCategory === "All" ? (
-            Object.keys(categories).map((categoryName, index) => (
+            {selectedCategory === "All" ? (
+              Object.keys(categories).map((categoryName, index) => (
+                <>
+                  <h2 className="category-title">
+                    Top stories about {categoryName}
+                  </h2>
+                  <div className="story-box">
+                    {categories[categoryName]
+                      .flatMap((storiesArray) => storiesArray)
+                      .slice(0, showMore[categoryName] ? undefined : 4)
+                      .map((story, storyIndex) => (
+                        <div key={storyIndex} className="story-card">
+                          <img
+                            src={story.slideImageUrl}
+                            alt="storypic"
+                            onClick={() => navigate(`/story/${story._id}`)}
+                          />
+                          <div
+                            className="dark-shadow"
+                            onClick={() => navigate(`/story/${story._id}`)}
+                          >
+                            <h3 className="story-title">
+                              {story.slideHeading}
+                            </h3>
+                            <h4 className="story-description">
+                              {story.slideDescription
+                                .split(" ")
+                                .slice(0, 16)
+                                .join(" ") + "..."}
+                            </h4>
+                          </div>
+                          {slideByUser.includes(story._id) ? (
+                            <Link to={`/editstory/${story._id}`}>
+                              <button className="edit-btn">&#x270E;Edit</button>
+                            </Link>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      ))}
+                  </div>
+
+                  {categories[categoryName].flatMap((item) => item).length >
+                    4 && (
+                    <button
+                      className="see-more"
+                      onClick={() => handleSeeMore(categoryName)}
+                    >
+                      {showMore[categoryName] ? "See less" : "See more"}
+                    </button>
+                  )}
+                </>
+              ))
+            ) : (
               <>
-                <h2 key={index} className="category-title">
-                  Top stories about {categoryName}
+                <h2 className="category-title">
+                  Top stories about {selectedCategory}
                 </h2>
                 <div className="story-box">
-                  {categories[categoryName]
-                    ?.slice(
-                      0,
-                      showMore[categoryName]
-                        ? categories[categoryName].length
-                        : 4
-                    )
-                    .map((storiesArray, innerIndex) => (
-                      <div
-                        key={innerIndex}
-                        className="story-card"
-                        onClick={() =>
-                          navigate(`/story/${storiesArray[0]._id}`)
-                        }
-                      >
+                  {categories[selectedCategory]
+                    .flatMap((storiesArray, index) => storiesArray)
+                    .slice(0, showMore[selectedCategory] ? undefined : 4)
+                    .map((story, storyIndex) => (
+                      <div key={storyIndex} className="story-card">
                         <img
-                          src={storiesArray[0].slideImageUrl}
+                          src={story.slideImageUrl}
                           alt="storypic"
+                          onClick={() => navigate(`/story/${story._id}`)}
                         />
-                        <div className="dark-shadow">
-                          <h3 className="story-title">
-                            {storiesArray[0].slideHeading}
-                          </h3>
+                        <div
+                          className="dark-shadow"
+                          onClick={() => navigate(`/story/${story._id}`)}
+                        >
+                          <h3 className="story-title">{story.slideHeading}</h3>
                           <h4 className="story-description">
-                            {storiesArray[0].slideDescription
+                            {story.slideDescription
                               .split(" ")
                               .slice(0, 16)
                               .join(" ") + "..."}
                           </h4>
                         </div>
+                        {slideByUser.includes(story._id) ? (
+                          <Link to={`/editstory/${story._id}`}>
+                            <button className="edit-btn">&#x270E;Edit</button>
+                          </Link>
+                        ) : (
+                          ""
+                        )}
                       </div>
                     ))}
                 </div>
-                {categories[categoryName].length > 4 && (
-                  <button
-                    className="see-more"
-                    onClick={() => handleSeeMore(categoryName)}
-                  >
-                    {showMore[categoryName] ? "See less" : "See more"}
-                  </button>
-                )}
-              </>
-            ))
-          ) : (
-            <>
-              <h2 className="category-title">
-                Top stories about {selectedCategory}
-              </h2>
-              <div className="story-box">
-                {categories[selectedCategory]
-                  ?.slice(
-                    0,
-                    showMore[selectedCategory]
-                      ? categories[selectedCategory].length
-                      : 4
-                  )
-                  .map((storiesArray, index) => (
-                    <div
-                      key={index}
-                      className="story-card"
-                      onClick={() => navigate(`/story/${storiesArray[0]._id}`)}
+                {Array.isArray(categories[selectedCategory]) &&
+                  categories[selectedCategory].flatMap((item) => item).length >
+                    4 && (
+                    <button
+                      className="see-more"
+                      onClick={() => handleSeeMore(selectedCategory)}
                     >
-                      <img src={storiesArray[0].slideImageUrl} alt="foodpic" />
-                      <div className="dark-shadow">
-                        <h3 className="story-title">
-                          {storiesArray[0].slideHeading}
-                        </h3>
-                        <h4 className="story-description">
-                          {storiesArray[0].slideDescription
-                            .split(" ")
-                            .slice(0, 16)
-                            .join(" ") + "..."}
-                        </h4>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-              {Array.isArray(categories[selectedCategory]) &&
-                categories[selectedCategory].length > 4 && (
-                  <button
-                    className="see-more"
-                    onClick={() => handleSeeMore(selectedCategory)}
-                  >
-                    {showMore[selectedCategory] ? "See less" : "See more"}
-                  </button>
-                )}
-            </>
-          )}
-        </div>
+                      {showMore[selectedCategory] ? "See less" : "See more"}
+                    </button>
+                  )}
+              </>
+            )}
+          </div>
+        )}
       </div>
     </>
   );

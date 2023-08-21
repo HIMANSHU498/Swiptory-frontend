@@ -23,7 +23,7 @@ const EditStory = () => {
         const jwtToken = localStorage.getItem("token");
 
         const response = await axios.get(
-          "https://swiptory-backend.onrender.com/api/storiesbyuser",
+          `https://swiptory-backend.onrender.com/api/story/edit/${id}`,
           {
             headers: {
               Authorization: jwtToken,
@@ -31,11 +31,10 @@ const EditStory = () => {
           }
         );
 
-        const userStories = response.data.userStories;
-        const foundStory = userStories.find((story) => story._id === id);
+        const foundStory = response.data.story.slides;
 
         if (foundStory) {
-          setStory(foundStory.slides);
+          setStory(foundStory);
         } else {
           setErrors("Story not found");
         }
@@ -170,7 +169,7 @@ const EditStory = () => {
               </select>
             </div>
           </div>
-          <p style={{ color: "red", marginLeft: "8rem",marginTop:'0' }}>
+          <p style={{ color: "red", marginLeft: "8rem", marginTop: "0" }}>
             {error && <span> {error}</span>}
           </p>
           <div className="editstory-buttons-box">
