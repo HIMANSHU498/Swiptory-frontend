@@ -14,10 +14,11 @@ const EditStory = () => {
     slideImageUrl: "",
     category: "",
   };
-
+  const [isLoading, setIsLoading] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [story, setStory] = useState([initialSlide]);
   useEffect(() => {
+    setIsLoading(true);
     const fetchUserStories = async () => {
       try {
         const jwtToken = localStorage.getItem("token");
@@ -32,7 +33,7 @@ const EditStory = () => {
         );
 
         const foundStory = response.data.story.slides;
-
+        setIsLoading(false);
         if (foundStory) {
           setStory(foundStory);
         } else {
@@ -117,57 +118,65 @@ const EditStory = () => {
             ))}
           </div>
           <div className="editstory-contentbox">
-            <div>
-              <label>Heading:</label>
-              <input
-                type="text"
-                name="slideHeading"
-                value={story[currentSlide].slideHeading}
-                onChange={handleChange}
-                placeholder="Your heading"
-                className="editstory-input"
-              />
-            </div>
-            <div>
-              <label>Description:</label>
-              <input
-                type="text"
-                name="slideDescription"
-                value={story[currentSlide].slideDescription}
-                onChange={handleChange}
-                placeholder="Story description"
-                className="editstory-input"
-                style={{ height: "80px" }}
-              />
-            </div>
-            <div>
-              <label>Image:</label>
-              <input
-                type="text"
-                name="slideImageUrl"
-                value={story[currentSlide].slideImageUrl}
-                onChange={handleChange}
-                placeholder="Add image url"
-                className="editstory-input"
-              />
-            </div>
-            <div>
-              <label>Category:</label>
-              <select
-                name="category"
-                value={story[currentSlide].category}
-                onChange={handleChange}
-              >
-                <option value="" defaultChecked>
-                  Select Category
-                </option>
-                <option value="food">Food</option>
-                <option value="health and fitness">Health and Fitness</option>
-                <option value="travel">Travel</option>
-                <option value="movies">Movies</option>
-                <option value="education">Education</option>
-              </select>
-            </div>
+            {!isLoading ? (
+              <>
+                <div>
+                  <label>Heading:</label>
+                  <input
+                    type="text"
+                    name="slideHeading"
+                    value={story[currentSlide].slideHeading}
+                    onChange={handleChange}
+                    placeholder="Your heading"
+                    className="editstory-input"
+                  />
+                </div>
+                <div>
+                  <label>Description:</label>
+                  <input
+                    type="text"
+                    name="slideDescription"
+                    value={story[currentSlide].slideDescription}
+                    onChange={handleChange}
+                    placeholder="Story description"
+                    className="editstory-input"
+                    style={{ height: "80px" }}
+                  />
+                </div>
+                <div>
+                  <label>Image:</label>
+                  <input
+                    type="text"
+                    name="slideImageUrl"
+                    value={story[currentSlide].slideImageUrl}
+                    onChange={handleChange}
+                    placeholder="Add image url"
+                    className="editstory-input"
+                  />
+                </div>
+                <div>
+                  <label>Category:</label>
+                  <select
+                    name="category"
+                    value={story[currentSlide].category}
+                    onChange={handleChange}
+                  >
+                    <option value="" defaultChecked>
+                      Select Category
+                    </option>
+                    <option value="food">Food</option>
+                    <option value="health and fitness">
+                      Health and Fitness
+                    </option>
+                    <option value="travel">Travel</option>
+                    <option value="movies">Movies</option>
+                    <option value="education">Education</option>
+                  </select>
+                </div>{" "}
+              </>
+            ) : (
+              <h2>Loading...</h2>
+            )}
           </div>
           <p style={{ color: "red", marginLeft: "8rem", marginTop: "0" }}>
             {error && <span> {error}</span>}

@@ -3,7 +3,9 @@ import "./Home.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import loadingbar from "./../../assets/loadingbar.gif";
 const Storybyuser = () => {
   const [stories, setStories] = useState([]);
   const [visibleSlides, setVisibleSlides] = useState(4);
@@ -26,7 +28,7 @@ const Storybyuser = () => {
         setStories(response.data.userStories || []);
         setIsLoading(false);
       } catch (error) {
-        console.error("Error fetching stories:", error);
+        toast("Error in fetching your stories:", error);
       }
     }
 
@@ -34,7 +36,7 @@ const Storybyuser = () => {
   }, []);
 
   const handleSeeMore = () => {
-    setVisibleSlides(stories.flatMap((story) => story.slides).length - 1);
+    setVisibleSlides(stories.flatMap((story) => story.slides).length);
   };
 
   const handleSeeLess = () => {
@@ -45,9 +47,22 @@ const Storybyuser = () => {
   return (
     <>
       <div className="stories-container">
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
+
         <h2 className="category-title">Your Stories</h2>
         {isLoading ? (
-          <p style={{ fontSize: "2rem", fontWeight: "700" }}>Loading...</p>
+          <img src={loadingbar} alt="loadingbar" />
         ) : storyLength.length === 0 ? (
           <p style={{ fontSize: "1rem", fontWeight: "500" }}>
             Please add your new story.
@@ -61,7 +76,7 @@ const Storybyuser = () => {
                 <div key={slideIndex} className="story-card">
                   <img
                     src={item.slideImageUrl}
-                    alt="foodpic"
+                    alt="storypic"
                     onClick={() => navigate(`/story/${item._id}`)}
                   />
                   <div
@@ -69,10 +84,10 @@ const Storybyuser = () => {
                     onClick={() => navigate(`/story/${item._id}`)}
                   >
                     <h3 className="story-title">{item.slideHeading}</h3>
-                    <h4 className="story-description">
+                    <div className="story-description">
                       {item.slideDescription.split(" ").slice(0, 16).join(" ") +
                         "..."}
-                    </h4>
+                    </div>
                   </div>
                   <Link to={`/editstory/${item._id}`}>
                     <button className="edit-btn">&#x270E;Edit</button>
@@ -81,19 +96,18 @@ const Storybyuser = () => {
               ))}
           </div>
         )}
-        {storyLength.length > visibleSlides && (
-          <div className="see-more-less">
-            {visibleSlides === 4 ? (
-              <button onClick={handleSeeMore} className="see-more">
-                See more
-              </button>
-            ) : (
-              <button onClick={handleSeeLess} className="see-more">
-                See less
-              </button>
-            )}
-          </div>
-        )}
+
+        <div className="see-more-less">
+          {visibleSlides === 4 ? (
+            <button onClick={handleSeeMore} className="see-more">
+              See more
+            </button>
+          ) : (
+            <button onClick={handleSeeLess} className="see-more">
+              See less
+            </button>
+          )}
+        </div>
       </div>
     </>
   );

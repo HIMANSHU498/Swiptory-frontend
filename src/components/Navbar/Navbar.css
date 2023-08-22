@@ -117,6 +117,7 @@
 }
 .username {
   color: #000;
+  text-transform: capitalize;
   text-align: center;
   font-family: DM Sans;
   font-size: 18px;

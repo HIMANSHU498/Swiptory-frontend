@@ -7,6 +7,7 @@ import category from "./data";
 import "./Home.css";
 import Storybyuser from "./Storybyuser";
 import { Link } from "react-router-dom";
+import loadingbar from "./../../assets/loadingbar.gif";
 const Home = () => {
   const [categories, setCategories] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -27,32 +28,30 @@ const Home = () => {
         setCategories(response.data.categories);
         setIsLoading(false);
       } catch (error) {
-        alert("Error fetching categories:", error);
+        toast("Error in fetching stories", error);
       }
     }
 
     fetchCategories();
     async function fetchStoriesByUser() {
-      try {
-        const jwtToken = localStorage.getItem("token");
-        const response = await axios.get(
-          "https://swiptory-backend.onrender.com/api/storiesbyuser",
-          {
-            headers: {
-              Authorization: jwtToken,
-            },
-          }
-        );
-        const slideIdArray = await response.data.userStories
-          .flatMap((story) => story.slides)
-          .map((item) => item._id);
-        setSlideByUser(slideIdArray);
-      } catch (error) {
-        console.error("Error fetching stories:", error);
-      }
+      const jwtToken = localStorage.getItem("token");
+      const response = await axios.get(
+        "https://swiptory-backend.onrender.com/api/storiesbyuser",
+        {
+          headers: {
+            Authorization: jwtToken,
+          },
+        }
+      );
+      const slideIdArray = await response.data.userStories
+        .flatMap((story) => story.slides)
+        .map((item) => item._id);
+      setSlideByUser(slideIdArray);
     }
-
-    fetchStoriesByUser();
+    const isUserLoggedIn = !!localStorage.getItem("token");
+    if (isUserLoggedIn) {
+      fetchStoriesByUser();
+    }
   }, []);
 
   const handleSeeMore = (categoryName) => {
@@ -107,11 +106,7 @@ const Home = () => {
           ))}
         </div>
         {isLoading ? (
-          <p
-            style={{ fontSize: "2rem", fontWeight: "700", textAlign: "center" }}
-          >
-            Loading...
-          </p>
+          <img src={loadingbar} alt="loadingbar" className="loadingbar" />
         ) : (
           <div className="stories-container">
             {!isLoggedIn || selectedCategory !== "All" ? "" : <Storybyuser />}
@@ -140,12 +135,12 @@ const Home = () => {
                             <h3 className="story-title">
                               {story.slideHeading}
                             </h3>
-                            <h4 className="story-description">
+                            <div className="story-description">
                               {story.slideDescription
                                 .split(" ")
                                 .slice(0, 16)
                                 .join(" ") + "..."}
-                            </h4>
+                            </div>
                           </div>
                           {slideByUser.includes(story._id) ? (
                             <Link to={`/editstory/${story._id}`}>
