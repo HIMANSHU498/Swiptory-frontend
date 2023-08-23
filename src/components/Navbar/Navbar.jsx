@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Navbar.css";
+import styles from "./Style.module.css";
 import profileIcon from "./../../assets/hk.png";
 import menuIcon from "./../../assets/menu-icon.svg";
 import bookmarkIcon from "./../../assets/Vector.svg";
@@ -14,6 +14,7 @@ const Navbar = () => {
   const username = localStorage.getItem("username");
   const viewport = window.innerWidth;
   console.log(viewport);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
@@ -29,22 +30,22 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="navbar-container">
-        <div className="page-title" onClick={() => navigate("/")}>
+      <div className={styles.navbarContainer}>
+        <div className={styles.pageTitle} onClick={() => navigate("/")}>
           SwipTory
         </div>
         {viewport > 600 ? (
-          <div className="navbar-btns">
+          <div className={styles.navbarBtns}>
             {!isLoggedIn ? (
               <>
                 <button
-                  className="register-btn"
+                  className={styles.registerBtn}
                   onClick={() => navigate("/register")}
                 >
                   Register Now
                 </button>
                 <button
-                  className="signin-btn"
+                  className={styles.signinBtn}
                   onClick={() => navigate("/login")}
                 >
                   Sign in
@@ -53,12 +54,12 @@ const Navbar = () => {
             ) : (
               <>
                 <Link to="/bookmarked" style={{ textDecoration: "none" }}>
-                  <button className="bookmarks-btn">
+                  <button className={styles.bookmarksBtn}>
                     <img src={bookmarkIcon} alt="" /> &nbsp; Bookmarks
                   </button>
                 </Link>
                 <button
-                  className="bookmarks-btn"
+                  className={styles.bookmarksBtn}
                   onClick={() => navigate("/addstory")}
                 >
                   Add Story
@@ -66,23 +67,23 @@ const Navbar = () => {
                 <img
                   src={profileIcon}
                   alt="profile-icon"
-                  className="profile-icon"
+                  className={styles.profileIcon}
                 />
                 <img
                   src={menuIcon}
                   alt="menu-icon"
-                  className="menu-icon"
+                  className={styles.menuIcon}
                   onClick={toggleProfileCard}
                 />
                 {isProfileCardOpen && (
-                  <div className="profile-card">
+                  <div className={styles.profileCard}>
                     <img
                       src={cross}
                       alt="cancel btn"
                       onClick={toggleProfileCard}
                     />
-                    <h1 className="username">{username}</h1>
-                    <button className="logout-btn" onClick={handleLogout}>
+                    <h1 className={styles.username}>{username}</h1>
+                    <button className={styles.logoutBtn} onClick={handleLogout}>
                       Logout
                     </button>
                   </div>
@@ -91,32 +92,32 @@ const Navbar = () => {
             )}
           </div>
         ) : (
-          <div className="mobileview">
+          <div className={styles.mobileview}>
             <img
               src={menuIcon}
               alt="menu-icon"
-              className="menu-icon"
+              className={styles.menuIcon}
               onClick={toggleProfileCard}
             />
             {isProfileCardOpen && (
-              <div className="profile-card">
+              <div className={styles.profileCard}>
                 <img
                   src={cross}
                   alt="cancel btn"
                   onClick={toggleProfileCard}
-                  id="crossBtn"
+                  id={styles.crossBtn}
                 />
-                <div className="profile-contentbox">
+                <div className={styles.profileContentbox}>
                   {!isLoggedIn ? (
                     <>
                       <button
-                        className="register-btn"
+                        className={styles.registerBtn}
                         onClick={() => navigate("/register")}
                       >
                         Register Now
                       </button>
                       <button
-                        className="signin-btn"
+                        className={styles.signinBtn}
                         onClick={() => navigate("/login")}
                       >
                         Sign in
@@ -134,23 +135,26 @@ const Navbar = () => {
                         <img
                           src={profileIcon}
                           alt="profile-icon"
-                          className="profile-icon"
+                          className={styles.profileIcon}
                         />
-                        <h1 className="username">{username}</h1>
+                        <h1 className={styles.username}>{username}</h1>
                       </div>
                       <Link to="/bookmarked" style={{ textDecoration: "none" }}>
-                        <button className="bookmarks-btn">
+                        <button className={styles.bookmarksBtn}>
                           <img src={bookmarkIcon} alt="" /> &nbsp; Bookmarks
                         </button>
                       </Link>
                       <button
-                        className="bookmarks-btn"
+                        className={styles.bookmarksBtn}
                         onClick={() => navigate("/addstory")}
                         style={{ paddingLeft: "40px" }}
                       >
                         Add Story
                       </button>
-                      <button className="logout-btn" onClick={handleLogout}>
+                      <button
+                        className={styles.logoutBtn}
+                        onClick={handleLogout}
+                      >
                         Logout
                       </button>
                     </>

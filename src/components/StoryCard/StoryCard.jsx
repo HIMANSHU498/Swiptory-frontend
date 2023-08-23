@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import ProgressBar from "./ProgressBar";
-import "./StoryCard.css";
+import styles from "./Style.module.css";
 import previousStoryBtn from "./../../assets/ooui_next-ltr.svg";
 import nextStoryBtn from "./../../assets/ooui_next-ltr (1).svg";
 import bookmarkedIcon from "./../../assets/Group 21.svg";
@@ -175,7 +175,13 @@ const StoryCard = () => {
   };
 
   if (!story || story.length === 0) {
-    return <img src="https://i.gifer.com/80ZN.gif" className="loading"></img>;
+    return (
+      <img
+        src="https://i.gifer.com/80ZN.gif"
+        className={styles.loading}
+        alt="Loading"
+      />
+    );
   }
 
   const currentSlide = story[currentSlideIndex];
@@ -184,7 +190,7 @@ const StoryCard = () => {
 
   return (
     <>
-      <div className="story-container">
+      <div className={styles.storyContainer}>
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -197,16 +203,17 @@ const StoryCard = () => {
           pauseOnHover
           theme="light"
         />
-        <div className="storycard-box">
+        <div className={styles.storycardBox}>
           <img
             src={previousStoryBtn}
             alt="backbutton"
             onClick={handlePreviousSlide}
-            id="previous-btn"
-            className={currentSlideIndex === 0 ? "disabled-btn" : "enabled-btn"}
+            className={
+              currentSlideIndex === 0 ? styles.disabledBtn : styles.enabledBtn
+            }
           />
-          <div className="storycard">
-            <div className="upper-darkshade">
+          <div className={styles.storycard}>
+            <div className={styles.upperDarkshade}>
               <ProgressBar
                 progress={progress}
                 maxProgress={100}
@@ -222,7 +229,7 @@ const StoryCard = () => {
                 <img
                   src={shareIcon}
                   alt="sharebutton"
-                  className="sharebtn"
+                  className={styles.sharebtn}
                   onClick={handleShare}
                 />
               </div>
@@ -230,24 +237,28 @@ const StoryCard = () => {
             <img
               src={currentSlide.slideImageUrl}
               alt=""
-              className="story-img"
+              className={styles.storyImg}
             />
             {showLinkShareBar && (
-              <div className="link-sharebar">Link copied to clipboard</div>
+              <div className={styles.linkSharebar}>
+                Link copied to clipboard
+              </div>
             )}
-            <div className="lower-darkshade">
-              <div className="story-title">{currentSlide.slideHeading}</div>
-              <div className="story-description">
+            <div className={styles.lowerDarkshade}>
+              <div className={styles.storyTitle}>
+                {currentSlide.slideHeading}
+              </div>
+              <div className={styles.storyDescription}>
                 {currentSlide.slideDescription}
               </div>
-              <div className="bookmarks-likes-container">
+              <div className={styles.bookmarksLikesContainer}>
                 {isLoggedIn && (
                   <>
                     <div onClick={handleBookmark}>
                       <img
                         src={bookmarkedIcon}
                         alt="bookmarkicon"
-                        className="bookmark-icon"
+                        className={styles.bookmarkIcon}
                       />
                     </div>
                     <div onClick={handleLiked}>
@@ -263,11 +274,10 @@ const StoryCard = () => {
             src={nextStoryBtn}
             alt="nextbutton"
             onClick={handleNextSlide}
-            id="next-btn"
             className={
               currentSlideIndex === story.length - 1
-                ? "disabled-btn"
-                : "enabled-btn"
+                ? styles.disabledBtn
+                : styles.enabledBtn
             }
           />
         </div>

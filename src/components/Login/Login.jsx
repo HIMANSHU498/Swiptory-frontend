@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Login.css";
+import styles from "./Style.module.css";
 import cancel from "./../../assets/cancel.svg";
 import eyeOutline from "./../../assets/eye.png";
 import eyeOffOutline from "./../../assets/hide.png";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 const Login = () => {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ username: "", password: "" });
@@ -51,17 +52,17 @@ const Login = () => {
   };
   return (
     <>
-      <div className="login-container">
-        <div className="login-box">
+      <div className={styles.loginContainer}>
+        <div className={styles.loginBox}>
           <img
             src={cancel}
             alt="cancel icon"
             onClick={cancelButton}
-            id="cancelBtn"
+            className={styles.cancelBtn}
           />
 
-          <div className="login-contentbox">
-            <h2 className="login-h2">Login to SwipTory</h2>
+          <div className={styles.loginContentBox}>
+            <h2 className={styles.loginH2}>Login to SwipTory</h2>
             <label>
               Username
               <input
@@ -86,20 +87,20 @@ const Login = () => {
                   src={eyeOffOutline}
                   alt="Hide Password"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="eye-icon"
+                  className={styles.eyeIcon}
                 />
               ) : (
                 <img
                   src={eyeOutline}
                   alt="Show Password"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="eye-icon"
+                  className={styles.eyeIcon}
                 />
               )}
             </label>
             <p style={{ color: "red" }}>{error && <span> {error}</span>}</p>
 
-            <button className="login-button" onClick={handleSubmit}>
+            <button className={styles.loginButton} onClick={handleSubmit}>
               Login
             </button>
           </div>

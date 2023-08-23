@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Home.css";
+import styles from "./Style.module.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router";
@@ -46,7 +46,7 @@ const Storybyuser = () => {
 
   return (
     <>
-      <div className="stories-container">
+      <div className={styles.storiesContainer}>
         <ToastContainer
           position="top-right"
           autoClose={5000}
@@ -60,7 +60,7 @@ const Storybyuser = () => {
           theme="light"
         />
 
-        <h2 className="category-title">Your Stories</h2>
+        <h2 className={styles.categoryTitle}>Your Stories</h2>
         {isLoading ? (
           <img src={loadingbar} alt="loadingbar" />
         ) : storyLength.length === 0 ? (
@@ -68,42 +68,42 @@ const Storybyuser = () => {
             Please add your new story.
           </p>
         ) : (
-          <div className="story-box">
+          <div className={styles.storyBox}>
             {stories
               .flatMap((story) => story.slides)
               .slice(0, visibleSlides)
               .map((item, slideIndex) => (
-                <div key={slideIndex} className="story-card">
+                <div key={slideIndex} className={styles.storyCard}>
                   <img
                     src={item.slideImageUrl}
                     alt="storypic"
                     onClick={() => navigate(`/story/${item._id}`)}
                   />
                   <div
-                    className="dark-shadow"
+                    className={styles.darkShadow}
                     onClick={() => navigate(`/story/${item._id}`)}
                   >
-                    <h3 className="story-title">{item.slideHeading}</h3>
-                    <div className="story-description">
+                    <h3 className={styles.storyTitle}>{item.slideHeading}</h3>
+                    <div className={styles.storyDescription}>
                       {item.slideDescription.split(" ").slice(0, 16).join(" ") +
                         "..."}
                     </div>
                   </div>
                   <Link to={`/editstory/${item._id}`}>
-                    <button className="edit-btn">&#x270E;Edit</button>
+                    <button className={styles.editBtn}>&#x270E;Edit</button>
                   </Link>
                 </div>
               ))}
           </div>
         )}
 
-        <div className="see-more-less">
+        <div className={styles.seeMoreLess}>
           {visibleSlides === 4 ? (
-            <button onClick={handleSeeMore} className="see-more">
+            <button onClick={handleSeeMore} className={styles.seeMore}>
               See more
             </button>
           ) : (
-            <button onClick={handleSeeLess} className="see-more">
+            <button onClick={handleSeeLess} className={styles.seeMore}>
               See less
             </button>
           )}

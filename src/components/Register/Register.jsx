@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import "./Register.css";
+import styles from "./Style.module.css";
 import cancel from "./../../assets/cancel.svg";
 import eyeOutline from "./../../assets/eye.png";
 import eyeOffOutline from "./../../assets/hide.png";
 import { useNavigate } from "react-router";
 import axios from "axios";
+
 const Register = () => {
   const [userData, setUserData] = useState({
     username: "",
@@ -13,6 +14,7 @@ const Register = () => {
   const [error, setErrors] = useState();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
     setErrors("");
@@ -44,21 +46,27 @@ const Register = () => {
         navigate("/");
       }
     } catch (error) {
-      alert("something went wrong, please try again");
+      alert("Something went wrong, please try again");
     }
   };
 
   const cancelButton = () => {
     navigate("/");
   };
+
   return (
     <>
-      <div className="register-container">
-        <div className="register-box">
-          <img src={cancel} alt="cancel icon" onClick={cancelButton} id="cancelBtn"/>
+      <div className={styles.registerContainer}>
+        <div className={styles.registerBox}>
+          <img
+            src={cancel}
+            alt="cancel icon"
+            onClick={cancelButton}
+            id={styles.cancelBtn}
+          />
 
-          <div className="register-contentbox">
-            <h2 className="login-h2">Register to SwipTory</h2>
+          <div className={styles.registerContentbox}>
+            <h2 className={styles.loginH2}>Register to SwipTory</h2>
             <label>
               Username
               <input
@@ -83,20 +91,19 @@ const Register = () => {
                   src={eyeOffOutline}
                   alt="Hide Password"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="eye-icon"
+                  className={styles.eyeIcon}
                 />
               ) : (
                 <img
                   src={eyeOutline}
                   alt="Show Password"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="eye-icon"
+                  className={styles.eyeIcon}
                 />
               )}
             </label>
             <p style={{ color: "red" }}>{error && <span> {error}</span>}</p>
-
-            <button className="register-button" onClick={dataSubmit}>
+            <button className={styles.registerButton} onClick={dataSubmit}>
               Register
             </button>
           </div>
