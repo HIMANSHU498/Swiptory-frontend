@@ -33,16 +33,16 @@
   width: 22vw;
   height: 80vh;
   border-radius: 10px;
-  background: rgb(255, 255, 255) -67.777px 0px / 139.986% 100% no-repeat;
+  background: rgb(0, 0, 0) -67.777px 0px / 139.986% 100% no-repeat;
 }
 
 .upperDarkshade {
   position: absolute;
   width: 22vw;
-  height: 20vh;
+  height: 12.6vh;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  background: linear-gradient(180deg, #000 42.26%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(180deg, #000 34.26%, rgba(0, 0, 0, 0) 100%);
   z-index: 1;
 }
 
@@ -60,11 +60,20 @@
 }
 
 .storyImg {
-  top: 7vh;
+  top: 5vh;
   position: absolute;
   width: 22vw;
-  height: 60vh;
-  border-radius: 10px;
+  height: 58vh;
+}
+.leftrightBtnBox {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  width: 21.7vw;
+  height: 52vh;
+  top: 10vh;
 }
 
 .bookmarksLikesContainer {
@@ -91,7 +100,7 @@
 }
 
 .upperDarkshade div {
-  margin: 20px 28px;
+  margin: 12px 28px;
   width: 18vw;
   display: flex;
   justify-content: space-between;
@@ -132,7 +141,7 @@
 }
 
 .storyDescription {
-  height: 10vh;
+  height: 8vh;
   padding: 0px 10px 0px;
   text-align: justify;
   color: #fff;
@@ -177,7 +186,9 @@
   .bookmarksLikesContainer div span {
     font-size: 16px;
   }
-
+  .upperDarkshade div {
+    margin-top: 20px;
+  }
   .linkSharebar {
     position: absolute;
     width: 20vw;
@@ -185,7 +196,14 @@
     font-size: 18px;
     margin: 15vw 20px;
   }
-
+  .storyTitle {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+  .storyDescription {
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+  }
   .loading {
     width: 150px;
     height: 150px;
@@ -198,8 +216,8 @@
 @media screen and (max-width: 750px) {
   .storyContainer {
     position: absolute;
-    width: 100vw;
-    height: 100vh;
+    width: 0vw;
+    height: 0vh;
     left: 0;
     top: 0;
     display: flex;
@@ -208,19 +226,12 @@
     display: flex;
   }
 
-  .storycardBox {
-    display: flex;
-    margin: auto;
-    justify-content: space-between;
-    gap: 1rem;
-  }
-
   .loading {
     width: 150px;
     height: 150px;
-    margin-left: 100px;
+    margin-left: 150px;
     text-align: center;
-    margin-top: 200px;
+    margin-top: 250px;
   }
 
   .storycard {
@@ -229,16 +240,16 @@
     height: 100vh;
     border-radius: 0;
     margin-top: 0;
-    background: rgb(255, 255, 255) -67.777px 0px / 139.986% 100% no-repeat;
+    background: rgb(0, 0, 0) -67.777px 0px / 139.986% 100% no-repeat;
   }
 
   .upperDarkshade {
     position: absolute;
     width: 100vw;
-    height: 20vh;
+    height: 12vh;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    background: linear-gradient(180deg, #000 40.26%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(180deg, #000 35.26%, rgba(0, 0, 0, 0) 100%);
     z-index: 1;
   }
 
@@ -249,7 +260,7 @@
     margin-top: 74vh;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    background: linear-gradient(0deg, #000000 40.26%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(0deg, #000000 45.26%, rgba(0, 0, 0, 0) 100%);
     padding-top: 0;
     box-sizing: border-box;
   }
@@ -257,15 +268,16 @@
   .storyImg {
     position: absolute;
     width: 100vw;
-    height: 100vh;
-    border-radius: 10px;
+    height: 80vh;
+
+    top: 6vh;
   }
 
   .bookmarksLikesContainer {
     display: flex;
     justify-content: space-between;
-    margin-left: 80px;
-    width: 70vw;
+    margin-left: 50px;
+    width: 80vw;
   }
 
   .bookmarksLikesContainer div {
@@ -310,14 +322,16 @@
   }
 
   .storyTitle {
-    font-size: 28px;
+    font-size: 26px;
     margin-bottom: 5px;
+    margin-left: 20px;
   }
 
   .storyDescription {
-    margin: 3px 16px 20px 10px;
+    margin: 10px 16px 24px 10px;
     text-align: justify;
-    height: 10vh;
+    font-size: 16px;
+    height: 8vh;
   }
 
   .enabledBtn {
@@ -327,5 +341,12 @@
   .disabledBtn {
     cursor: default;
     opacity: 0.6;
+  }
+  .leftrightBtnBox {
+    width: 98%;
+    height: 68vh;
+  }
+  #previousBtn {
+    display: none;
   }
 }

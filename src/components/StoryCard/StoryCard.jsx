@@ -208,6 +208,7 @@ const StoryCard = () => {
             src={previousStoryBtn}
             alt="backbutton"
             onClick={handlePreviousSlide}
+            id={styles.previousBtn}
             className={
               currentSlideIndex === 0 ? styles.disabledBtn : styles.enabledBtn
             }
@@ -233,6 +234,13 @@ const StoryCard = () => {
                   onClick={handleShare}
                 />
               </div>
+            </div>
+            <div className={styles.leftrightBtnBox}>
+              <div
+                className={styles.leftBtn}
+                onClick={handlePreviousSlide}
+              ></div>
+              <div className={styles.rightBtn} onClick={handleNextSlide}></div>
             </div>
             <img
               src={currentSlide.slideImageUrl}
@@ -274,6 +282,7 @@ const StoryCard = () => {
             src={nextStoryBtn}
             alt="nextbutton"
             onClick={handleNextSlide}
+            id={styles.previousBtn}
             className={
               currentSlideIndex === story.length - 1
                 ? styles.disabledBtn

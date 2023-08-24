@@ -100,7 +100,11 @@
   font-weight: 700;
   line-height: normal;
 }
-
+.storyBoxContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .darkShadow {
   border-radius: 0px 0px 15px 15px;
   top: 29.1vh;
