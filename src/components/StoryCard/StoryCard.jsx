@@ -11,7 +11,7 @@ import cancelIcon from "./../../assets/storycross.svg";
 import { useNavigate, useParams } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import apiBaseUrl from "./../../constants/api";
 const StoryCard = () => {
   const [story, setStory] = useState(null);
   const { id } = useParams();
@@ -26,12 +26,12 @@ const StoryCard = () => {
 
   useEffect(() => {
     axios
-      .get(`https://swiptory-backend.onrender.com/api/story/${id}`)
+      .get(`${apiBaseUrl}/api/story/${id}`)
       .then((response) => {
         setStory(response.data.story.slides);
       })
       .catch((error) => {
-        console.error("Error fetching story:", error);
+        toast("Error fetching story", error);
       });
   }, [id]);
 
@@ -99,7 +99,7 @@ const StoryCard = () => {
 
   const handleShare = () => {
     const currentSlideId = story[currentSlideIndex]._id;
-    const baseLink = process.env.REACT_APP_BASE_URL || "http://localhost:3000";
+    const baseLink = process.env.REACT_APP_BASE_URL;
     const linkToCopy = `${baseLink}/story/${currentSlideId}`;
 
     navigator.clipboard.writeText(linkToCopy).then(() => {
@@ -126,7 +126,7 @@ const StoryCard = () => {
       const currentSlideId = story[currentSlideIndex]._id;
       const jwtToken = localStorage.getItem("token");
       const response = await axios.post(
-        `https://swiptory-backend.onrender.com/api/stories/${currentSlideId}/bookmark`,
+        `${apiBaseUrl}/api/story/bookmark/${currentSlideId}`,
         null,
         {
           headers: {
@@ -139,7 +139,7 @@ const StoryCard = () => {
         toast("Story bookmarked successfully");
       }
     } catch (error) {
-      console.error("Error bookmarking the story:", error);
+      toast("Error bookmarking the story", error);
     }
   };
 
@@ -153,7 +153,7 @@ const StoryCard = () => {
       const currentSlideId = story[currentSlideIndex]._id;
       const jwtToken = localStorage.getItem("token");
       const response = await axios.post(
-        `https://swiptory-backend.onrender.com/api/stories/${currentSlideId}/like`,
+        `${apiBaseUrl}/api/story/like/${currentSlideId}`,
         null,
         {
           headers: {
@@ -162,7 +162,7 @@ const StoryCard = () => {
         }
       );
       const likes = await axios.get(
-        `https://swiptory-backend.onrender.com/api/stories/${currentSlideId}/likes`
+        `${apiBaseUrl}/api/story/like/${currentSlideId}`
       );
 
       if (response.status === 200) {
@@ -170,7 +170,7 @@ const StoryCard = () => {
         toast("Story liked successfully");
       }
     } catch (error) {
-      console.error("Error liking the story:", error);
+      toast("Error liking the story", error);
     }
   };
 

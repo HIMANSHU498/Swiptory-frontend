@@ -39,10 +39,10 @@
 .upperDarkshade {
   position: absolute;
   width: 22vw;
-  height: 12.6vh;
+  height: 10vh;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  background: linear-gradient(180deg, #000 34.26%, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient(180deg, #000 20.26%, rgba(0, 0, 0, 0) 100%);
   z-index: 1;
 }
 
@@ -60,10 +60,10 @@
 }
 
 .storyImg {
-  top: 5vh;
+  top: 2.5vh;
   position: absolute;
   width: 22vw;
-  height: 58vh;
+  height: 60vh;
 }
 .leftrightBtnBox {
   position: absolute;
@@ -100,7 +100,7 @@
 }
 
 .upperDarkshade div {
-  margin: 12px 28px;
+  margin: 8px 28px;
   width: 18vw;
   display: flex;
   justify-content: space-between;
@@ -187,7 +187,8 @@
     font-size: 16px;
   }
   .upperDarkshade div {
-    margin-top: 20px;
+    margin-top: 15px;
+    margin-left: 35px;
   }
   .linkSharebar {
     position: absolute;
@@ -229,7 +230,7 @@
   .loading {
     width: 150px;
     height: 150px;
-    margin-left: 150px;
+    margin-left: 140px;
     text-align: center;
     margin-top: 250px;
   }
@@ -249,7 +250,7 @@
     height: 12vh;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    background: linear-gradient(180deg, #000 35.26%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(180deg, #000 15.26%, rgba(0, 0, 0, 0) 100%);
     z-index: 1;
   }
 
@@ -268,9 +269,9 @@
   .storyImg {
     position: absolute;
     width: 100vw;
-    height: 80vh;
+    height: 82vh;
 
-    top: 6vh;
+    top: 3vh;
   }
 
   .bookmarksLikesContainer {

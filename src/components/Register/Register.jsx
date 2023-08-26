@@ -5,7 +5,9 @@ import eyeOutline from "./../../assets/eye.png";
 import eyeOffOutline from "./../../assets/hide.png";
 import { useNavigate } from "react-router";
 import axios from "axios";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import apiBaseUrl from "./../../constants/api";
 const Register = () => {
   const [userData, setUserData] = useState({
     username: "",
@@ -25,7 +27,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "https://swiptory-backend.onrender.com/api/register",
+        `${apiBaseUrl}/api/auth/register`,
         userData,
         {
           headers: {
@@ -35,7 +37,6 @@ const Register = () => {
       );
 
       const responseData = await response.data;
-      console.log(responseData);
 
       if (responseData.error) {
         setErrors(responseData.error);
@@ -46,7 +47,7 @@ const Register = () => {
         navigate("/");
       }
     } catch (error) {
-      alert("Something went wrong, please try again");
+      toast("Something went wrong, please try again");
     }
   };
 
@@ -57,6 +58,18 @@ const Register = () => {
   return (
     <>
       <div className={styles.registerContainer}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <div className={styles.registerBox}>
           <img
             src={cancel}

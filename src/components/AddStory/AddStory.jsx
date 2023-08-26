@@ -3,7 +3,9 @@ import styles from "./Style.module.css";
 import cancel from "./../../assets/cancel.svg";
 import { useNavigate } from "react-router";
 import axios from "axios";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import apiBaseUrl from "./../../constants/api";
 const AddStory = () => {
   const navigate = useNavigate();
   const [error, setErrors] = useState("");
@@ -47,7 +49,7 @@ const AddStory = () => {
       const jwtToken = localStorage.getItem("token");
 
       const response = await axios.post(
-        "https://swiptory-backend.onrender.com/api/addstory",
+        `${apiBaseUrl}/api/story/addstory`,
         { slides },
         {
           headers: {
@@ -62,7 +64,7 @@ const AddStory = () => {
         navigate("/");
       }
     } catch (error) {
-      console.error("Error adding story:", error.response.data);
+      toast("something went wrong, please try again", error.response.data);
     }
   };
 
@@ -81,6 +83,18 @@ const AddStory = () => {
   return (
     <>
       <div className={styles.addstoryContainer}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <div className={styles.addstoryBox}>
           <img src={cancel} alt="cancel-icon" onClick={cancelButton} />
           <div id={styles.heading2}>Add up to 6 slides</div>

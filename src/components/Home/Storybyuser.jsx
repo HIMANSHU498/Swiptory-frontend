@@ -6,6 +6,7 @@ import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import loadingbar from "./../../assets/loadingbar.gif";
+import apiBaseUrl from "./../../constants/api";
 const Storybyuser = () => {
   const [stories, setStories] = useState([]);
   const [visibleSlides, setVisibleSlides] = useState(4);
@@ -18,7 +19,7 @@ const Storybyuser = () => {
       try {
         const jwtToken = localStorage.getItem("token");
         const response = await axios.get(
-          "https://swiptory-backend.onrender.com/api/storiesbyuser",
+          `${apiBaseUrl}/api/story/storiesbyuser`,
           {
             headers: {
               Authorization: jwtToken,
@@ -84,7 +85,9 @@ const Storybyuser = () => {
                       className={styles.darkShadow}
                       onClick={() => navigate(`/story/${item._id}`)}
                     >
-                      <h3 className={styles.storyTitle}>{item.slideHeading}</h3>
+                      <div className={styles.storyTitle}>
+                        {item.slideHeading}
+                      </div>
                       <div className={styles.storyDescription}>
                         {item.slideDescription
                           .split(" ")

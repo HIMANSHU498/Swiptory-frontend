@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import apiBaseUrl from "./../../constants/api";
 const Login = () => {
   const navigate = useNavigate();
   const [loginData, setLoginData] = useState({ username: "", password: "" });
@@ -23,7 +23,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://swiptory-backend.onrender.com/api/login",
+        `${apiBaseUrl}/api/auth/login`,
         loginData,
         {
           headers: {
@@ -33,18 +33,17 @@ const Login = () => {
       );
 
       const responseData = response.data;
-      console.log(responseData);
+
       if (responseData.error) {
         setErrors(responseData.error);
       } else {
         window.localStorage.setItem("username", responseData.name);
         window.localStorage.setItem("token", responseData.jwtToken);
-        // alert(responseData.success);
 
         navigate("/");
       }
     } catch (error) {
-      alert("something went wrong, please try again");
+      toast("something went wrong, please try again");
     }
   };
   const cancelButton = () => {
@@ -53,6 +52,18 @@ const Login = () => {
   return (
     <>
       <div className={styles.loginContainer}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <div className={styles.loginBox}>
           <img
             src={cancel}

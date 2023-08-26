@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import loadingbar from "./../../assets/loadingbar.gif";
-
+import apiBaseUrl from "./../../constants/api";
 const Bookmark = () => {
   const [bookmarkedStories, setBookmarkedStories] = useState([]);
   const [visibleStories, setVisibleStories] = useState(4);
@@ -20,7 +20,7 @@ const Bookmark = () => {
       try {
         const jwtToken = localStorage.getItem("token");
         const response = await axios.get(
-          "https://swiptory-backend.onrender.com/api/bookmarks",
+          `${apiBaseUrl}/api/story/bookmark/bookmarkedstories`,
           {
             headers: {
               Authorization: jwtToken,
@@ -86,7 +86,10 @@ const Bookmark = () => {
                             {story.slideHeading}
                           </h3>
                           <h4 className={styles.storyDescription}>
-                            {story.slideDescription}
+                            {story.slideDescription
+                              .split(" ")
+                              .slice(0, 16)
+                              .join(" ") + "..."}
                           </h4>
                         </div>
                       </div>
@@ -111,7 +114,7 @@ const Bookmark = () => {
             <img
               src={loadingbar}
               alt="loadingbar"
-              style={{ margin: "200px 580px" }}
+              className={styles.loadingbar}
             />
           )}
         </div>

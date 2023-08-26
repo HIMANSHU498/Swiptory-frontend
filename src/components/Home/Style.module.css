@@ -83,11 +83,12 @@
 .storyTitle {
   color: #fff;
   font-family: DM Sans;
-  font-size: 18px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   margin-left: 1vw;
+  margin-bottom: 5px;
 }
 
 .storyDescription {
@@ -107,11 +108,12 @@
 }
 .darkShadow {
   border-radius: 0px 0px 15px 15px;
-  top: 29.1vh;
+  top: 32vh;
   position: relative;
   width: 20vw;
   height: 18vh;
   background: linear-gradient(360deg, #000 40.26%, rgba(0, 0, 0, 0) 100%);
+  padding-top: 10px;
 }
 
 .seeMore {
@@ -133,7 +135,7 @@
 
 .editBtn {
   position: relative;
-  top: 26vh;
+  top: 28.5vh;
   left: 7vw;
   width: 79px;
   height: 34px;
@@ -191,7 +193,7 @@
   }
 
   .loadingbar {
-    margin-top: 150;
+    margin-top: 150px;
     margin-left: 750px;
   }
 
@@ -204,7 +206,7 @@
 
   .editBtn {
     position: relative;
-    top: 26vh;
+    top: 28.8vh;
     left: 7vw;
     width: 84px;
     height: 36px;
@@ -235,7 +237,10 @@
     background-position: center;
     padding: 10px;
   }
-
+  .loadingbar {
+    margin-top: 140px;
+    margin-left: 180px;
+  }
   .categoryName {
     margin-top: 1px;
     color: #ffffff;
@@ -254,6 +259,8 @@
     align-items: center;
     width: 100vw;
     margin-top: 0px;
+
+    margin-bottom: 20px;
   }
 
   .categoryTitle {
@@ -261,7 +268,7 @@
     color: #000;
     text-align: center;
     font-family: DM Sans;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -269,6 +276,7 @@
 
   .storyBox {
     width: 100vw;
+
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
@@ -278,7 +286,7 @@
   .storyCard {
     margin-bottom: 20px;
     width: 90vw;
-    height: 50vh;
+    height: 60vh;
     cursor: pointer;
     border-radius: 15px;
   }
@@ -306,7 +314,7 @@
   }
 
   .storyDescription {
-    margin-left: 2vw;
+    margin-left: 1vw;
     color: #fff;
     font-family: DM Sans;
     font-size: 16px;
@@ -317,7 +325,7 @@
 
   .darkShadow {
     border-radius: 15px;
-    top: 29vh;
+    top: 41vh;
     position: relative;
     width: 90vw;
     height: 18vh;
@@ -343,7 +351,7 @@
 
   .editBtn {
     position: relative;
-    top: 27vh;
+    top: 38.5vh;
     left: 34vw;
     width: 100px;
     height: 35px;

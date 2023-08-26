@@ -3,7 +3,9 @@ import styles from "./Style.module.css";
 import cancel from "./../../assets/cancel.svg";
 import { useNavigate, useParams } from "react-router";
 import axios from "axios";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import apiBaseUrl from "./../../constants/api";
 const EditStory = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -23,14 +25,11 @@ const EditStory = () => {
     const fetchUserStories = async () => {
       try {
         const jwtToken = localStorage.getItem("token");
-        const response = await axios.get(
-          `https://swiptory-backend.onrender.com/api/story/edit/${id}`,
-          {
-            headers: {
-              Authorization: jwtToken,
-            },
-          }
-        );
+        const response = await axios.get(`${apiBaseUrl}/api/story/edit/${id}`, {
+          headers: {
+            Authorization: jwtToken,
+          },
+        });
 
         const foundStory = response.data.story.slides;
         setIsLoading(false);
@@ -41,7 +40,7 @@ const EditStory = () => {
           setErrors("Story not found");
         }
       } catch (error) {
-        console.error("Error fetching story:", error.response.data);
+        toast("Error fetching story", error.response.data);
       }
     };
 
@@ -76,7 +75,7 @@ const EditStory = () => {
       const slides = story;
       const jwtToken = localStorage.getItem("token");
       const response = await axios.put(
-        `https://swiptory-backend.onrender.com/api/story/edit/${id}`,
+        `${apiBaseUrl}/api/story/edit/${id}`,
         { slides },
         {
           headers: {
@@ -91,7 +90,7 @@ const EditStory = () => {
         navigate("/");
       }
     } catch (error) {
-      console.error("Error editing story:", error.response.data);
+      toast("Error editing story", error.response.data);
     }
   };
 
@@ -102,6 +101,18 @@ const EditStory = () => {
   return (
     <>
       <div className={styles.editstoryContainer}>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         <div className={styles.editstoryBox}>
           <img src={cancel} alt="cancel-icon" onClick={cancelButton} />
           <div id={styles.heading2}>Edit Story</div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Style.module.css";
 import profileIcon from "./../../assets/hk.png";
 import menuIcon from "./../../assets/menu-icon.svg";
@@ -9,12 +9,15 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
-
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const isLoggedIn = !!localStorage.getItem("token");
   const username = localStorage.getItem("username");
-  const viewport = window.innerWidth;
-  console.log(viewport);
 
+  useEffect(() => {
+    window.addEventListener("resize", () => {
+      setInnerWidth(window.innerWidth);
+    });
+  }, []);
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
@@ -34,7 +37,7 @@ const Navbar = () => {
         <div className={styles.pageTitle} onClick={() => navigate("/")}>
           SwipTory
         </div>
-        {viewport > 600 ? (
+        {innerWidth > 600 ? (
           <div className={styles.navbarBtns}>
             {!isLoggedIn ? (
               <>

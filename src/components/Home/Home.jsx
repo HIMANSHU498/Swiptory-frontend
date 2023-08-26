@@ -5,11 +5,10 @@ import { useNavigate } from "react-router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import category from "./data";
-
 import Storybyuser from "./Storybyuser";
 import { Link } from "react-router-dom";
 import loadingbar from "./../../assets/loadingbar.gif";
-
+import apiBaseUrl from "./../../constants/api";
 const Home = () => {
   const [categories, setCategories] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -23,9 +22,7 @@ const Home = () => {
     setIsLoading(true);
     async function fetchCategories() {
       try {
-        const response = await axios.get(
-          "https://swiptory-backend.onrender.com/api/categories"
-        );
+        const response = await axios.get(`${apiBaseUrl}/api/story/categories`);
 
         setCategories(response.data.categories);
         setIsLoading(false);
@@ -38,7 +35,7 @@ const Home = () => {
     async function fetchStoriesByUser() {
       const jwtToken = localStorage.getItem("token");
       const response = await axios.get(
-        "https://swiptory-backend.onrender.com/api/storiesbyuser",
+        `${apiBaseUrl}/api/story/storiesbyuser`,
         {
           headers: {
             Authorization: jwtToken,
@@ -119,7 +116,7 @@ const Home = () => {
 
             {selectedCategory === "All" ? (
               Object.keys(categories).map((categoryName, index) => (
-                <>
+                <React.Fragment key={index}>
                   <h2 className={styles.categoryTitle}>
                     Top stories about {categoryName}
                   </h2>
@@ -138,9 +135,9 @@ const Home = () => {
                             className={styles.darkShadow}
                             onClick={() => navigate(`/story/${story._id}`)}
                           >
-                            <h3 className={styles.storyTitle}>
+                            <div className={styles.storyTitle}>
                               {story.slideHeading}
-                            </h3>
+                            </div>
                             <div className={styles.storyDescription}>
                               {story.slideDescription
                                 .split(" ")
@@ -148,6 +145,7 @@ const Home = () => {
                                 .join(" ") + "..."}
                             </div>
                           </div>
+
                           {slideByUser.includes(story._id) ? (
                             <Link to={`/editstory/${story._id}`}>
                               <button className={styles.editBtn}>
@@ -170,7 +168,7 @@ const Home = () => {
                       {showMore[categoryName] ? "See less" : "See more"}
                     </button>
                   )}
-                </>
+                </React.Fragment>
               ))
             ) : (
               <>
@@ -179,7 +177,7 @@ const Home = () => {
                 </h2>
                 <div className={styles.storyBox}>
                   {categories[selectedCategory]
-                    .flatMap((storiesArray, index) => storiesArray)
+                    .flatMap((storiesArray) => storiesArray)
                     .slice(0, showMore[selectedCategory] ? undefined : 4)
                     .map((story, storyIndex) => (
                       <div key={storyIndex} className={styles.storyCard}>
@@ -192,15 +190,15 @@ const Home = () => {
                           className={styles.darkShadow}
                           onClick={() => navigate(`/story/${story._id}`)}
                         >
-                          <h3 className={styles.storyTitle}>
+                          <div className={styles.storyTitle}>
                             {story.slideHeading}
-                          </h3>
-                          <h4 className={styles.storyDescription}>
+                          </div>
+                          <div className={styles.storyDescription}>
                             {story.slideDescription
                               .split(" ")
                               .slice(0, 16)
                               .join(" ") + "..."}
-                          </h4>
+                          </div>
                         </div>
                         {slideByUser.includes(story._id) ? (
                           <Link to={`/editstory/${story._id}`}>
