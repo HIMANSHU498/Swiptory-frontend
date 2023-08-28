@@ -43,7 +43,7 @@ const Register = () => {
       } else {
         window.localStorage.setItem("username", responseData.name);
         window.localStorage.setItem("token", responseData.jwtToken);
-        alert(responseData.success);
+
         navigate("/");
       }
     } catch (error) {

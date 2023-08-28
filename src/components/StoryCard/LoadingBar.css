@@ -1,0 +1,19 @@
+.progress-container {
+  width: 100%;
+  height: 10px;
+  background-color: #a0a0a0; /* Gray-blue background */
+  border-radius: 10px;
+
+  position: relative;
+}
+
+.progress-bar {
+  height: 10px;
+  position: relative;
+}
+
+.progress-filler {
+  height: 10px;
+  background-color: #00aaff; /* Blue progress color */
+  border-radius: 10px; /* Maintain rounded corners */
+}

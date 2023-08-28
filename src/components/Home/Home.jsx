@@ -7,8 +7,10 @@ import "react-toastify/dist/ReactToastify.css";
 import category from "./data";
 import Storybyuser from "./Storybyuser";
 import { Link } from "react-router-dom";
+
 import loadingbar from "./../../assets/loadingbar.gif";
 import apiBaseUrl from "./../../constants/api";
+import StoryCard from "../StoryCard/StoryCard";
 const Home = () => {
   const [categories, setCategories] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -63,7 +65,19 @@ const Home = () => {
   const handleCategoryClick = (categoryName) => {
     setSelectedCategory(categoryName);
   };
-
+  const [storyCardData, setStoryCardData] = useState();
+  const handleSlide = async (storySlideId, slideCategoryName) => {
+    const slidesByCategory = await categories[slideCategoryName].flatMap(
+      (storiesArray) => storiesArray
+    );
+    setStoryCardData(slidesByCategory);
+    setTimeout(() => {
+      navigate(`/story/${storySlideId}`);
+    }, 0);
+  };
+  useEffect(() => {
+    localStorage.setItem("storyCardData", JSON.stringify(storyCardData));
+  }, [storyCardData]);
   return (
     <>
       <div className={styles.homeContainer}>
@@ -129,11 +143,11 @@ const Home = () => {
                           <img
                             src={story.slideImageUrl}
                             alt="storypic"
-                            onClick={() => navigate(`/story/${story._id}`)}
+                            onClick={() => handleSlide(story._id, categoryName)}
                           />
                           <div
                             className={styles.darkShadow}
-                            onClick={() => navigate(`/story/${story._id}`)}
+                            onClick={() => handleSlide(story._id, categoryName)}
                           >
                             <div className={styles.storyTitle}>
                               {story.slideHeading}
@@ -184,11 +198,15 @@ const Home = () => {
                         <img
                           src={story.slideImageUrl}
                           alt="storypic"
-                          onClick={() => navigate(`/story/${story._id}`)}
+                          onClick={() =>
+                            handleSlide(story._id, selectedCategory)
+                          }
                         />
                         <div
                           className={styles.darkShadow}
-                          onClick={() => navigate(`/story/${story._id}`)}
+                          onClick={() =>
+                            handleSlide(story._id, selectedCategory)
+                          }
                         >
                           <div className={styles.storyTitle}>
                             {story.slideHeading}

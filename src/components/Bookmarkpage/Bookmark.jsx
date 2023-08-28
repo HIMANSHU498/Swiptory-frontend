@@ -20,7 +20,7 @@ const Bookmark = () => {
       try {
         const jwtToken = localStorage.getItem("token");
         const response = await axios.get(
-          `${apiBaseUrl}/api/story/bookmark/bookmarkedstories`,
+          `${apiBaseUrl}/api/story/bookmark/bookmarkedslides`,
           {
             headers: {
               Authorization: jwtToken,
@@ -45,7 +45,17 @@ const Bookmark = () => {
   const handleSeeLess = () => {
     setVisibleStories(4);
   };
-
+  const [storyCardData, setStoryCardData] = useState();
+  const handleSlide = async (storySlideId) => {
+    const slidesByCategory = bookmarkedStories;
+    setStoryCardData(slidesByCategory);
+    setTimeout(() => {
+      navigate(`/story/${storySlideId}`);
+    }, 0);
+  };
+  useEffect(() => {
+    localStorage.setItem("storyCardData", JSON.stringify(storyCardData));
+  }, [storyCardData]);
   return (
     <>
       <ToastContainer
@@ -68,7 +78,7 @@ const Bookmark = () => {
           {!isLoading ? (
             <div className={styles.storiesContainer}>
               <h2 className={styles.categoryTitle}>Your Bookmarks</h2>
-              {bookmarkedStories.error === "Slides not found" ? (
+              {bookmarkedStories.error === "No bookmarked slides found" ? (
                 <p>No bookmarked story</p>
               ) : (
                 <div className={styles.storyBox}>
@@ -78,7 +88,7 @@ const Bookmark = () => {
                       <div
                         key={i}
                         className={styles.storyCard}
-                        onClick={() => navigate(`/story/${story._id}`)}
+                        onClick={() => handleSlide(story._id)}
                       >
                         <img src={story.slideImageUrl} alt="foodpic" />
                         <div className={styles.darkShadow}>

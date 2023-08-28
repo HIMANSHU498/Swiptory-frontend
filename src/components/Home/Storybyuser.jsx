@@ -45,6 +45,17 @@ const Storybyuser = () => {
   };
   const storyLength = stories.map((story) => story.slides).flat();
 
+  const [storyCardData, setStoryCardData] = useState();
+  const handleSlide = async (storySlideId) => {
+    const slidesByCategory = stories.flatMap((story) => story.slides);
+    setStoryCardData(slidesByCategory);
+    setTimeout(() => {
+      navigate(`/story/${storySlideId}`);
+    }, 0);
+  };
+  useEffect(() => {
+    localStorage.setItem("storyCardData", JSON.stringify(storyCardData));
+  }, [storyCardData]);
   return (
     <>
       <div className={styles.storiesContainer}>
@@ -79,11 +90,11 @@ const Storybyuser = () => {
                     <img
                       src={item.slideImageUrl}
                       alt="storypic"
-                      onClick={() => navigate(`/story/${item._id}`)}
+                      onClick={() => handleSlide(item._id)}
                     />
                     <div
                       className={styles.darkShadow}
-                      onClick={() => navigate(`/story/${item._id}`)}
+                      onClick={() => handleSlide(item._id)}
                     >
                       <div className={styles.storyTitle}>
                         {item.slideHeading}
