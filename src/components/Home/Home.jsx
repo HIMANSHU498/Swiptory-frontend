@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 import loadingbar from "./../../assets/loadingbar.gif";
 import apiBaseUrl from "./../../constants/api";
-import StoryCard from "../StoryCard/StoryCard";
+
 const Home = () => {
   const [categories, setCategories] = useState({});
   const [selectedCategory, setSelectedCategory] = useState("All");

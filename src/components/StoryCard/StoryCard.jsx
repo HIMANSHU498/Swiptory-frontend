@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -50,30 +50,6 @@ const StoryCard = () => {
 
     checkLoginStatus();
   }, []);
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setProgress((prevProgress) =>
-        prevProgress + 33.33 > 100 ? 0 : prevProgress + 33.33
-      );
-    }, 1000); // 1 second interval
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, []);
-  useEffect(() => {
-    let interval;
-
-    if (enableAutoSlideChange) {
-      interval = setInterval(() => {
-        handleNextSlide();
-      }, 3000);
-    }
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [currentSlideIndex, enableAutoSlideChange]);
 
   const handleSlideChange = (newIndex) => {
     setCurrentSlideIndex(newIndex);
@@ -95,7 +71,36 @@ const StoryCard = () => {
       handleSlideChange(newIndex);
     }
   };
+  useEffect(() => {
+    let currentProgress = 0;
+    let increment = 100 / (10 * 30);
 
+    const interval = setInterval(() => {
+      currentProgress += increment;
+      if (currentProgress > 100) {
+        clearInterval(interval);
+      } else {
+        setProgress(currentProgress);
+      }
+    }, 33);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [currentSlideIndex, enableAutoSlideChange]);
+  useEffect(() => {
+    let timeInterval;
+
+    if (enableAutoSlideChange) {
+      timeInterval = setInterval(() => {
+        handleNextSlide();
+      }, 10000);
+    }
+
+    return () => {
+      clearInterval(timeInterval);
+    };
+  }, [currentSlideIndex, enableAutoSlideChange]);
   const handleShare = () => {
     const currentSlideId = story[currentSlideIndex]._id;
     const baseLink = process.env.REACT_APP_BASE_URL;

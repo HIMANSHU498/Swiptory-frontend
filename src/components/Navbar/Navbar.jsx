@@ -37,7 +37,7 @@ const Navbar = () => {
         <div className={styles.pageTitle} onClick={() => navigate("/")}>
           SwipTory
         </div>
-        {innerWidth > 600 ? (
+        {innerWidth > 650 ? (
           <div className={styles.navbarBtns}>
             {!isLoggedIn ? (
               <>

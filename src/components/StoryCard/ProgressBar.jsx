@@ -1,5 +1,5 @@
 import React from "react";
-import "./LoadingBar.css"; // Make sure to create this CSS file
+import "./LoadingBar.css";
 
 const ProgressBar = ({ progress }) => {
   return (
