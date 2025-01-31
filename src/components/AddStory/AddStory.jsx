@@ -35,7 +35,7 @@ const AddStory = () => {
       setCurrentSlide((prevIndex) => prevIndex + 1);
     }
   };
-
+//shift
   const handlePreviousSlide = () => {
     if (currentSlide > 0) {
       setCurrentSlide((prevIndex) => prevIndex - 1);
